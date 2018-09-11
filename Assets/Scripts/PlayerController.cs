@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class PlayerController : AIAgentController
 {
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         GameManager.Instance.PlayerController = this;
     }
 }

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     // Referenes
     public PlayerController PlayerController;
+    public WorldCameraController WorldCamera;
 
     // Privates
     public List<StockStationController> StockStations;
