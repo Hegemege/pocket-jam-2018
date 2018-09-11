@@ -59,14 +59,12 @@ public class StockManager : MonoBehaviour
         if (GameManager.Instance.PlayerSelectedStation != -1)
         {
             float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
-            Debug.Log(array.Length);
-            Debug.Log(graph);
             Vector3[] positions = new Vector3[array.Length];
             for (int i = 0; i < array.Length; i++)
             {
                 Vector3 pos = new Vector3();
                 pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
-                pos.y = array[i].Remap(0f, 1000f, 3.2f, 5.7f);
+                pos.y = array[i].Remap(0f, 200f, 3.2f, 5.7f);
                 positions[i] = pos;
             }
             graph.SetPositions(positions);

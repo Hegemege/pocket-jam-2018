@@ -54,14 +54,22 @@ public class GameUIController : MonoBehaviour
 
         BuySellOverlay.gameObject.SetActive(GameManager.Instance.CloseToTarget);
 
-        var buyPrice = StockManager.Instance.Stocks[currentIndex].BuyPrice();
-        var sellPrice = StockManager.Instance.Stocks[currentIndex].SellPrice();
-        var buyAmount = StockManager.Instance.Stocks[currentIndex].AmountOnMarket -
-            GameManager.Instance.PlayerPortfolio[currentType];
-        var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
+        if (currentIndex != -1 && GameManager.Instance.CloseToTarget)
+        {
+            var buyPrice = StockManager.Instance.Stocks[currentIndex].BuyPrice();
+            var sellPrice = StockManager.Instance.Stocks[currentIndex].SellPrice();
+            var buyAmount = StockManager.Instance.Stocks[currentIndex].AmountOnMarket -
+                GameManager.Instance.PlayerPortfolio[currentType];
+            var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
 
-        // Update buy/sell counts and prices
+            Debug.Log(buyPrice);
 
+            // Update buy/sell counts and prices
+            GameObject.Find("BuyText").GetComponent<Text>().text = buyPrice.ToString();
+            GameObject.Find("BuyCount").GetComponent<Text>().text = buyAmount.ToString();
+            GameObject.Find("SellText").GetComponent<Text>().text = sellPrice.ToString();
+            GameObject.Find("SellCount").GetComponent<Text>().text = sellAmount.ToString();
+        }
     }
 
     public void PreviousStation()
@@ -79,6 +87,7 @@ public class GameUIController : MonoBehaviour
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
         if (GameManager.Instance.CanBuyStock(currentType))
         {
+            Debug.Log("Buying " + currentType.ToString());
             GameManager.Instance.BuyStock(currentType);
         }
     }
@@ -88,6 +97,7 @@ public class GameUIController : MonoBehaviour
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
         if (GameManager.Instance.CanSellStock(currentType))
         {
+            Debug.Log("Selling " + currentType.ToString());
             GameManager.Instance.SellStock(currentType);
         }
     }

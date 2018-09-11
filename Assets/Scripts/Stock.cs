@@ -90,7 +90,6 @@ public struct Stock
         this.MarketCap += this.PriceChangePerTransaction;
         foreach (StockRelation rel in this.Relations)
         {
-            Debug.Log(rel.priceChangePerTransaction);
             rel.stock.RelatedBought(rel.priceChangePerTransaction);
         }
         return currentPrice;
