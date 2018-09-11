@@ -15,7 +15,7 @@ public class GameUIController : MonoBehaviour
 
     public void PreviousStation()
     {
-
+        
     }
 
     public void NextStation()

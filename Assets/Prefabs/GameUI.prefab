@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224911963176152400}
   - component: {fileID: 222910551590796828}
   - component: {fileID: 114706818609312706}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224462857653605720}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StockName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224468835379668162}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4333215341800548}
   - component: {fileID: 114681532763436430}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 224085804173142770}
   - component: {fileID: 222606586305323332}
   - component: {fileID: 114085492285359172}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 223135873207713352}
   - component: {fileID: 114085963041958572}
   - component: {fileID: 114119600701687632}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224607220849638466}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StockGraph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,8 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4099917268873660}
   - component: {fileID: 20074186525895436}
-  - component: {fileID: 81301843741249200}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +150,7 @@ GameObject:
   - component: {fileID: 4226193771235612}
   - component: {fileID: 114618029002942188}
   - component: {fileID: 114403512636297550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +167,7 @@ GameObject:
   - component: {fileID: 224721733212604716}
   - component: {fileID: 222860863895340924}
   - component: {fileID: 114227682710480912}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +185,7 @@ GameObject:
   - component: {fileID: 222845579556415506}
   - component: {fileID: 114712088572335710}
   - component: {fileID: 114534422415482662}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +202,7 @@ GameObject:
   - component: {fileID: 224323581835353950}
   - component: {fileID: 222520612162629240}
   - component: {fileID: 114919128781412818}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Graph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +220,7 @@ GameObject:
   - component: {fileID: 222892728805986520}
   - component: {fileID: 114067802783917082}
   - component: {fileID: 114596416188790284}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +237,7 @@ GameObject:
   - component: {fileID: 224483209671364936}
   - component: {fileID: 222446238045654910}
   - component: {fileID: 114855223515566386}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,13 +326,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &81301843741249200
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1501628525556764}
-  m_Enabled: 1
 --- !u!114 &114067802783917082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -508,7 +500,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114712088572335710}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114681532763436430}
+        m_MethodName: NextStation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114596416188790284
@@ -549,7 +552,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114067802783917082}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114681532763436430}
+        m_MethodName: PreviousStation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114618029002942188
@@ -678,7 +692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -751,7 +765,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 20074186525895436}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -806,7 +820,7 @@ RectTransform:
   m_GameObject: {fileID: 1043599913177144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000068, y: 1.0000068, z: 1.0000068}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224911963176152400}
   - {fileID: 224593211666467634}
@@ -827,7 +841,7 @@ RectTransform:
   m_GameObject: {fileID: 1154273816408560}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000068, y: 1.0000068, z: 1.0000068}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224085804173142770}
   m_Father: {fileID: 224487411638738074}
