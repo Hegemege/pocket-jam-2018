@@ -17,7 +17,7 @@ public class StockManager : MonoBehaviour
         }
     }
 
-    public LineRenderer graph;
+    private LineRenderer graph;
 
     public List<Stock> Stocks = new List<Stock>();
 
@@ -25,6 +25,8 @@ public class StockManager : MonoBehaviour
 
     void Awake()
     {
+        this.graph = GameObject.Find("Graph").GetComponent<LineRenderer>();
+
         // Setup singleton
         if (_instance != null)
         {
@@ -43,7 +45,6 @@ public class StockManager : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log(GameManager.Instance.isPlaying);
             if (GameManager.Instance.isPlaying)
             {
                 UpdateStocks();
@@ -55,9 +56,11 @@ public class StockManager : MonoBehaviour
 
     private void UpdateGraph()
     {
-        if (GameManager.Instance.PlayerSelectedStation == 0)
+        if (GameManager.Instance.PlayerSelectedStation != -1)
         {
             float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
+            Debug.Log(array.Length);
+            Debug.Log(graph);
             Vector3[] positions = new Vector3[array.Length];
             for (int i = 0; i < array.Length; i++)
             {
