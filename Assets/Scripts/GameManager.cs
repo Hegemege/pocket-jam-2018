@@ -15,10 +15,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Publics
     public float PlayerFunds = 10000f;
     public Dictionary<string, int> PlayerPortfolio = new Dictionary<string, int>();
 
-    public bool CanBuyStock(string name) {
+    public List<StockStationController> StockStations;
+    public int PlayerSelectedStation = -1; // Initially none
+
+    // Privates
+
+
+    public bool CanBuyStock(string name)
+    {
         bool can = false;
         StockManager.Instance.Stocks.ForEach((stock) =>
         {
@@ -31,7 +39,8 @@ public class GameManager : MonoBehaviour
         return can;
     }
 
-    public bool CanSellStock(string name) {
+    public bool CanSellStock(string name)
+    {
         return PlayerPortfolio[name] > 0;
     }
 
@@ -62,6 +71,25 @@ public class GameManager : MonoBehaviour
                 }
             });
         }
+    }
+
+    /// <summary>
+    /// Gets the world location of the given station name
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Vector3 GetStockStationPosition(string name)
+    {
+        for (var i = 0; i < StockStations.Count; i++)
+        {
+            if (StockStations[i].StockName == name)
+            {
+                return StockStations[i].transform.position;
+            }
+        }
+
+        Debug.LogWarning("Could not find stock station " + name);
+        return Vector3.zero;
     }
 
     void Awake()
