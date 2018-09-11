@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 440b68d3cb4c99c4998f77968eae8268
+guid: 10cd163a4cb9b384d938fd6eb5c8fed0
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Rail_Top
-    2100002: PigPink
+    2100000: Default
+    2100002: MetalSupport
     2300000: //RootNode
     3300000: //RootNode
-    4300000: DoorWay
+    4300000: Wall_Window
   externalObjects: {}
   materials:
     importMaterials: 1
