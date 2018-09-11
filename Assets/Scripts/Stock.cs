@@ -4,14 +4,14 @@ using UnityEngine;
 
 public struct Stock
 {
-    public string Name;
+    public StockType Name;
     public float PriceChangePerTransaction;
     public float MarketCap;
     public float AmountOnMarket;
 
     public List<StockRelation> Relations;
 
-    public Stock(string name,
+    public Stock(StockType name,
         float marketCap,
         float amountOnMarket,
         float priceChangePerTransaction,
@@ -70,11 +70,11 @@ public struct Stock
     public void RelatedSold(float priceChange)
     {
         this.MarketCap -= priceChange;
-        if (Mathf.Abs(priceChange) > 0.5f)
+        if (Mathf.Abs(priceChange) > 0.1f)
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedSold(rel.priceChangePerTransaction / 2);
+                rel.stock.RelatedSold(rel.priceChangePerTransaction / 4);
             }
         }
     }
@@ -82,11 +82,11 @@ public struct Stock
     public void RelatedBought(float priceChange)
     {
         this.MarketCap += priceChange;
-        if (Mathf.Abs(priceChange) > 0.5f)
+        if (Mathf.Abs(priceChange) > 0.1f)
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedBought(rel.priceChangePerTransaction / 2);
+                rel.stock.RelatedBought(rel.priceChangePerTransaction / 4);
             }
         }
     }

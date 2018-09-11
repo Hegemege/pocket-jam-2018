@@ -90,7 +90,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -188,15 +188,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4631811811883158, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.93
+      value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: 4631811811883158, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.62
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4631811811883158, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 15.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4631811811883158, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
       propertyPath: m_LocalRotation.x
@@ -317,15 +317,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4647697024696030, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.279
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4647697024696030, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.62
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4647697024696030, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 15.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4647697024696030, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
       propertyPath: m_LocalRotation.x

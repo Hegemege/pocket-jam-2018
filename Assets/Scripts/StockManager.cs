@@ -32,37 +32,63 @@ public class StockManager : MonoBehaviour {
     }
 
 	private void CreateStocks () {
-		Stock wood = new Stock("Wood", 10000, 100, 2);
-		Stock paper = new Stock("Paper", 20000, 100, 2);
-		Stock napkin = new Stock("Napkin", 1000, 10, 5);
+		Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2);
+		Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2);
+		Stock food = new Stock(StockType.Food, 10000, 100, 2);
+		Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2);
+		Stock technology = new Stock(StockType.Technology, 8000, 100, 2);
+		Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2);
+		Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2);
+		Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2);
 
-		Stock iron = new Stock("Raw Iron", 20000, 80, 3);
-		Stock steel = new Stock("Steel", 20000, 150, 2);
-		Stock construction = new Stock("Construction Materials", 12000, 40, 4);
+		CreateRelation(alcohol, restoration, 1f);
+		CreateRelation(alcohol, entertainment, 1f);
+		CreateRelation(alcohol, chemicals, -1f);
+		CreateRelation(alcohol, technology, -1f);
+		
+		CreateRelation(restoration, alcohol, 1f);
+		CreateRelation(restoration, food, 1f);
+		CreateRelation(restoration, fuel, -1f);
+		CreateRelation(restoration, tourism, -1f);
+		
+		CreateRelation(food, restoration, 1f);
+		CreateRelation(food, chemicals, 1f);
+		CreateRelation(food, fuel, -1f);
+		CreateRelation(food, entertainment, -1f);
+		
+		CreateRelation(chemicals, food, 1f);
+		CreateRelation(chemicals, technology, 1f);
+		CreateRelation(chemicals, alcohol, -1f);
+		CreateRelation(chemicals, tourism, -1f);
+		
+		CreateRelation(technology, chemicals, 1f);
+		CreateRelation(technology, fuel, 1f);
+		CreateRelation(technology, alcohol, -1f);
+		CreateRelation(technology, entertainment, -1f);
+		
+		CreateRelation(fuel, technology, 1f);
+		CreateRelation(fuel, tourism, 1f);
+		CreateRelation(fuel, food, -1f);
+		CreateRelation(fuel, restoration, -1f);
+		
+		CreateRelation(tourism, fuel, 1f);
+		CreateRelation(tourism, entertainment, 1f);
+		CreateRelation(tourism, restoration, -1f);
+		CreateRelation(tourism, chemicals, -1f);
+		
+		CreateRelation(entertainment, alcohol, 1f);
+		CreateRelation(entertainment, tourism, 1f);
+		CreateRelation(entertainment, food, -1f);
+		CreateRelation(entertainment, technology, -1f);
 
-		Stock computers = new Stock("Computer Hardware", 15000, 120, 5);
-		Stock software = new Stock("Software", 16000, 200, 4);
-
-		CreateRelation(wood, paper, 0.5f);
-		CreateRelation(wood, iron, -0.2f);
-		CreateRelation(wood, computers, 0.1f);
-		CreateRelation(paper, napkin, 0.4f);
-		CreateRelation(napkin, software, 0.4f);
-		CreateRelation(iron, steel, 0.6f);
-		CreateRelation(iron, wood, -0.2f);
-		CreateRelation(steel, construction, 0.2f);
-		CreateRelation(iron, construction, 0.1f);
-		CreateRelation(computers, software, 1f);
-		CreateRelation(software, napkin, 0.2f);
-
-		this.Stocks.Add(wood);
-		this.Stocks.Add(paper);
-		this.Stocks.Add(napkin);
-		this.Stocks.Add(iron);
-		this.Stocks.Add(steel);
-		this.Stocks.Add(construction);
-		this.Stocks.Add(computers);
-		this.Stocks.Add(software);
+		this.Stocks.Add(alcohol);
+		this.Stocks.Add(restoration);
+		this.Stocks.Add(food);
+		this.Stocks.Add(chemicals);
+		this.Stocks.Add(technology);
+		this.Stocks.Add(fuel);
+		this.Stocks.Add(tourism);
+		this.Stocks.Add(entertainment);
 	}
 
 	private void CreateRelation(Stock from, Stock to, float multiplier)
@@ -72,4 +98,8 @@ public class StockManager : MonoBehaviour {
 		rel.priceChangePerTransaction = multiplier;
 		from.AddRelation(rel);
 	}
+}
+
+public enum StockType {
+	Alcohol, Restoration, Food, Chemicals, Technology, Fuel, Tourism, Entertainment
 }
