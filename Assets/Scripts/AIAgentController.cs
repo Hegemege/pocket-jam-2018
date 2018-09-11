@@ -12,7 +12,7 @@ public class AIAgentController : MonoBehaviour
 
     protected bool _active;
     protected Vector3 _target;
-    protected float _deactivateDistance = 5f;
+    protected float _deactivateDistance = 5.5f;
 
     protected virtual void Awake()
     {
@@ -33,7 +33,8 @@ public class AIAgentController : MonoBehaviour
         }
 
         // Deactivate when close enough to target. Enable UI
-        if (Vector3.Distance(transform.position, _target) < _deactivateDistance && _active)
+        var distance = Vector3.Distance(transform.position, _target);
+        if (distance < _deactivateDistance && _active)
         {
             ReachedTarget();
             _active = false;
@@ -46,12 +47,11 @@ public class AIAgentController : MonoBehaviour
 
     }
 
-    public void SetMoveTarget(Vector3 target)
+    public virtual void SetMoveTarget(Vector3 target)
     {
         _active = true;
         _target = target;
         _agent.isStopped = false;
-        GameManager.Instance.CloseToTarget = false;
         _agent.SetDestination(target);
     }
 }

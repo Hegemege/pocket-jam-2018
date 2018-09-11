@@ -37,6 +37,8 @@ public class LizardController : AIAgentController
 
     protected override void ReachedTarget()
     {
+        base.ReachedTarget();
+
         if (_atTarget) return;
 
         _atTarget = true;
@@ -58,6 +60,7 @@ public class LizardController : AIAgentController
         var stocks = new List<Stock>();
         stocks.AddRange(StockManager.Instance.Stocks);
         stocks.Sort((a, b) => a.Volatility.CompareTo(b.Volatility));
+        stocks.Reverse();
 
         var randomStock = stocks[Random.Range(0, 3)];
         var targetPosition = GameManager.Instance.GetStockStationPosition(randomStock.Name);
