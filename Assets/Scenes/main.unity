@@ -229,8 +229,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.030509949
-        value: 0.1015625
+        time: 0.0033912659
+        value: 0.03125
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -426,7 +426,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0

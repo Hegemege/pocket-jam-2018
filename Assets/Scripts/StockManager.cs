@@ -54,9 +54,23 @@ public class StockManager : MonoBehaviour
         while (true)
         {
             UpdateStocks();
-
+            UpdateGraph();
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    private void UpdateGraph()
+    {
+        float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
+        Vector3[] positions = new Vector3[array.Length];
+        for (int i = 0; i < array.Length; i++)
+        {
+            Vector3 pos = new Vector3();
+            pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
+            pos.y = array[i].Remap(0f, 1000f, 3.2f, 5.7f);
+            positions[i] = pos;
+        }
+        graph.SetPositions(positions);
     }
 
     private void UpdateStocks()
@@ -73,9 +87,16 @@ public class StockManager : MonoBehaviour
         float[] array = stockHistory[type];
         for (int i = 0; i < array.Length; i++)
         {
-
-            array[i] = array[i + 1];
+            if (i < array.Length - 1)
+            {
+                array[i] = array[i + 1];
+            }
+            if (i == array.Length - 1)
+            {
+                array[i] = price;
+            }
         }
+        stockHistory[type] = array;
     }
 
     /// <summary>
