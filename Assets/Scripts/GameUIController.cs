@@ -18,6 +18,8 @@ public class GameUIController : MonoBehaviour
     public Text FundsText;
     public Text VolatilityText;
 
+    public GameObject VolatilityLabel;
+
     private float _buyPrice;
     private float _sellPrice;
     private int _funds;
@@ -31,6 +33,9 @@ public class GameUIController : MonoBehaviour
 
     void Awake()
     {
+        _integerCache = new Dictionary<int, string>();
+        _floatCache = new Dictionary<int, string>();
+
         _stockNameLookup = new Dictionary<StockType, string>();
         foreach (StockType type in Enum.GetValues(typeof(StockType)))
         {
@@ -40,11 +45,12 @@ public class GameUIController : MonoBehaviour
 
         _currentPlayerSelectedStationIndex = GameManager.Instance.PlayerSelectedStation;
         StockNameText.text = "";
+        FundsText.text = GetCachedFloatTwoDecimals(GameManager.Instance.PlayerFunds);
+
+        VolatilityText.text = "";
+        VolatilityLabel.SetActive(false);
 
         BuySellOverlay.SetActive(false);
-
-        _integerCache = new Dictionary<int, string>();
-        _floatCache = new Dictionary<int, string>();
     }
 
     void Update()
@@ -52,8 +58,15 @@ public class GameUIController : MonoBehaviour
         var currentIndex = GameManager.Instance.PlayerSelectedStation;
         if (currentIndex == -1) return;
 
+        // Reactivate volatility label
+        if (!VolatilityLabel.activeInHierarchy)
+        {
+            VolatilityLabel.SetActive(true);
+        }
+
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
 
+        // Update the name of the stock station
         if (GameManager.Instance.PlayerSelectedStation != _currentPlayerSelectedStationIndex)
         {
             StockNameText.text = _stockNameLookup[currentType];
@@ -100,7 +113,7 @@ public class GameUIController : MonoBehaviour
             }
 
             // Funds
-            FundsText.text = GetCachedInteger(funds);
+            FundsText.text = GetCachedFloatTwoDecimals(GameManager.Instance.PlayerFunds);
         }
     }
 
