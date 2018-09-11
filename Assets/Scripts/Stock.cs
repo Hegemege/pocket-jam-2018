@@ -58,11 +58,11 @@ public class Stock
 
     public float SellPrice()
     {
-        return Price * 0.95f;
+        return Price * StockManager.Instance.StockSellPriceMultiplier;
     }
     public float BuyPrice()
     {
-        return Price * 1.05f;
+        return Price * StockManager.Instance.StockBuyPriceMultiplier;
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ public class Stock
     public float Sell()
     {
         float currentPrice = this.SellPrice();
-        this.MarketCap -= this.PriceChangePerTransaction;
-        Volatility = Volatility * 1.1f;
+        this.MarketCap = this.MarketCap * (1 + this.PriceChangePerTransaction) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop);
+        Volatility = Volatility * StockManager.Instance.VolatilityIncrease * Random.Range(StockManager.Instance.VolatilityRandomChangeBottom, StockManager.Instance.VolatilityRandomChangeTop);
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedSold(rel.priceChangePerTransaction);
@@ -88,8 +88,8 @@ public class Stock
     public float Buy()
     {
         float currentPrice = this.BuyPrice();
-        this.MarketCap += this.PriceChangePerTransaction;
-        Volatility = Volatility * 1.1f;
+        this.MarketCap = (this.MarketCap * (1 + this.PriceChangePerTransaction) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
+        Volatility = Volatility * StockManager.Instance.VolatilityIncrease * Random.Range(StockManager.Instance.VolatilityRandomChangeBottom, StockManager.Instance.VolatilityRandomChangeTop);
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedBought(rel.priceChangePerTransaction);
@@ -103,12 +103,12 @@ public class Stock
     /// <param name="priceChange"></param>
     public void RelatedSold(float priceChange)
     {
-        this.MarketCap -= priceChange;
-        if (Mathf.Abs(priceChange) > 0.1f)
+        this.MarketCap = (this.MarketCap * (1 + priceChange) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
+        if (Mathf.Abs(priceChange) > StockManager.Instance.StockPriceChangeDistanceMinValue)
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedSold(priceChange / 4);
+                rel.stock.RelatedSold(priceChange * StockManager.Instance.StockPriceChangeDistanceDecay);
             }
         }
     }
@@ -119,12 +119,12 @@ public class Stock
     /// <param name="priceChange"></param>
     public void RelatedBought(float priceChange)
     {
-        this.MarketCap += priceChange;
-        if (Mathf.Abs(priceChange) > 0.1f)
+        this.MarketCap = (this.MarketCap * (1 + priceChange) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
+        if (Mathf.Abs(priceChange) > StockManager.Instance.StockPriceChangeDistanceMinValue)
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedBought(priceChange / 4);
+                rel.stock.RelatedBought(priceChange * StockManager.Instance.StockPriceChangeDistanceDecay);
             }
         }
     }
@@ -135,11 +135,13 @@ public class Stock
 
         if (!this.Closed)
         {
-            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time) * Volatility;
+            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * StockManager.Instance.VolatilityFluctuationTimeMultiplier) * Volatility;
 
-            Volatility = Volatility - 1;
-            if (Volatility < 20) {
-                Volatility = 20;
+            Volatility = Volatility * StockManager.Instance.VolatilityDecay;
+            if (Volatility < StockManager.Instance.MinVolatility) {
+                Volatility = StockManager.Instance.MinVolatility;
+            } if (Volatility > StockManager.Instance.MaxVolatility) {
+                Volatility = StockManager.Instance.MaxVolatility;
             }
 
             if (Volatility > StockManager.Instance.VolatilityThreshold)

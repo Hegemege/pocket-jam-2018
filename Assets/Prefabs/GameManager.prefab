@@ -110,8 +110,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f745e0f16715c0428fb110a7c1b9893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OperationsPerSecond: 2
   VolatilityThreshold: 500
   VolatilityLockTime: 20
+  MaxVolatility: 600
+  MinVolatility: 20
+  VolatilityDecay: 0.98
+  VolatilityIncrease: 1.05
+  VolatilityFluctuationTimeMultiplier: 1
+  StockSellPriceMultiplier: 0.95
+  StockBuyPriceMultiplier: 1.05
+  StockPriceChangeDistanceDecay: 0.25
+  StockPriceChangeDistanceMinValue: 0.001
+  VolatilityRandomChangeBottom: 0.995
+  VolatilityRandomChangeTop: 1.005
+  StockPriceRandomChangeBottom: 0.995
+  StockPriceRandomChangeTop: 1.005
 --- !u!114 &114773433917430330
 MonoBehaviour:
   m_ObjectHideFlags: 1

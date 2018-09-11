@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class StockManager : MonoBehaviour
 {
-    public int VolatilityThreshold = 20;
-    public int VolatilityLockTime = 20;
+    public float OperationsPerSecond = 1f;
+    public int VolatilityThreshold = 500;
+    public int VolatilityLockTime = 500;
+    public int MaxVolatility = 600;
+    public int MinVolatility = 20;
+    public float VolatilityDecay = 0.98f;
+    public float VolatilityIncrease = 1.05f;
+    public float VolatilityFluctuationTimeMultiplier = 1f;
+    public float StockSellPriceMultiplier = 0.95f;
+    public float StockBuyPriceMultiplier = 1.05f;
+    public float StockPriceChangeDistanceDecay = 0.25f;
+    public float StockPriceChangeDistanceMinValue = 0.001f;
+    public float VolatilityRandomChangeBottom = 0.995f;
+    public float VolatilityRandomChangeTop = 1.005f;
+    public float StockPriceRandomChangeBottom = 0.995f;
+    public float StockPriceRandomChangeTop = 1.005f;
 
     //Singleton
     private static StockManager _instance;
@@ -25,7 +39,8 @@ public class StockManager : MonoBehaviour
 
     void Awake()
     {
-        this.graph = GameObject.Find("Graph").GetComponent<LineRenderer>();
+        var activeInstance = _instance ? _instance : this;
+        activeInstance.graph = GameObject.Find("Graph").GetComponent<LineRenderer>();
 
         // Setup singleton
         if (_instance != null)
@@ -50,7 +65,7 @@ public class StockManager : MonoBehaviour
                 UpdateStocks();
                 UpdateGraph();
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1 / OperationsPerSecond);
         }
     }
 
@@ -60,11 +75,20 @@ public class StockManager : MonoBehaviour
         {
             float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
             Vector3[] positions = new Vector3[array.Length];
+
+            float largest = 0;
+            foreach (float f in array)
+            {
+                if (largest < f)
+                {
+                    largest = f;
+                }
+            }
             for (int i = 0; i < array.Length; i++)
             {
                 Vector3 pos = new Vector3();
                 pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
-                pos.y = array[i].Remap(0f, 50f, 3.2f, 5.7f);
+                pos.y = array[i].Remap(0f, largest * 2, 3.2f, 5.7f);
                 positions[i] = pos;
             }
             graph.SetPositions(positions);
@@ -105,54 +129,54 @@ public class StockManager : MonoBehaviour
     /// </summary>
     private void CreateStocks()
     {
-        Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 2f, 20f);
-        Stock restoration = new Stock(StockType.Restoration, 800, 100, 2f, 20f);
-        Stock food = new Stock(StockType.Food, 1000, 100, 2f, 20f);
-        Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 2f, 20f);
-        Stock technology = new Stock(StockType.Technology, 800, 100, 2f, 20f);
-        Stock fuel = new Stock(StockType.Fuel, 1000, 100, 2f, 20f);
-        Stock tourism = new Stock(StockType.Tourism, 1200, 100, 2f, 20f);
-        Stock entertainment = new Stock(StockType.Entertainment, 800, 100, 2f, 20f);
+        Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 0.03f, 20f);
+        Stock restoration = new Stock(StockType.Restoration, 800, 100, 0.03f, 20f);
+        Stock food = new Stock(StockType.Food, 1000, 100, 0.03f, 20f);
+        Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 0.03f, 20f);
+        Stock technology = new Stock(StockType.Technology, 800, 100, 0.03f, 20f);
+        Stock fuel = new Stock(StockType.Fuel, 1000, 100, 0.03f, 20f);
+        Stock tourism = new Stock(StockType.Tourism, 1200, 100, 0.03f, 20f);
+        Stock entertainment = new Stock(StockType.Entertainment, 800, 100, 0.03f, 20f);
 
-        CreateRelation(alcohol, restoration, 1f);
-        CreateRelation(alcohol, entertainment, 1f);
-        CreateRelation(alcohol, chemicals, -1f);
-        CreateRelation(alcohol, technology, -1f);
+        CreateRelation(alcohol, restoration, 0.01f);
+        CreateRelation(alcohol, entertainment, 0.01f);
+        CreateRelation(alcohol, chemicals, -0.01f);
+        CreateRelation(alcohol, technology, -0.01f);
 
-        CreateRelation(restoration, alcohol, 1f);
-        CreateRelation(restoration, food, 1f);
-        CreateRelation(restoration, fuel, -1f);
-        CreateRelation(restoration, tourism, -1f);
+        CreateRelation(restoration, alcohol, 0.01f);
+        CreateRelation(restoration, food, 0.01f);
+        CreateRelation(restoration, fuel, -0.01f);
+        CreateRelation(restoration, tourism, -0.01f);
 
-        CreateRelation(food, restoration, 1f);
-        CreateRelation(food, chemicals, 1f);
-        CreateRelation(food, fuel, -1f);
-        CreateRelation(food, entertainment, -1f);
+        CreateRelation(food, restoration, 0.01f);
+        CreateRelation(food, chemicals, 0.01f);
+        CreateRelation(food, fuel, -0.01f);
+        CreateRelation(food, entertainment, -0.01f);
 
-        CreateRelation(chemicals, food, 1f);
-        CreateRelation(chemicals, technology, 1f);
-        CreateRelation(chemicals, alcohol, -1f);
-        CreateRelation(chemicals, tourism, -1f);
+        CreateRelation(chemicals, food, 0.01f);
+        CreateRelation(chemicals, technology, 0.01f);
+        CreateRelation(chemicals, alcohol, -0.01f);
+        CreateRelation(chemicals, tourism, -0.01f);
 
-        CreateRelation(technology, chemicals, 1f);
-        CreateRelation(technology, fuel, 1f);
-        CreateRelation(technology, alcohol, -1f);
-        CreateRelation(technology, entertainment, -1f);
+        CreateRelation(technology, chemicals, 0.01f);
+        CreateRelation(technology, fuel, 0.01f);
+        CreateRelation(technology, alcohol, -0.01f);
+        CreateRelation(technology, entertainment, -0.01f);
 
-        CreateRelation(fuel, technology, 1f);
-        CreateRelation(fuel, tourism, 1f);
-        CreateRelation(fuel, food, -1f);
-        CreateRelation(fuel, restoration, -1f);
+        CreateRelation(fuel, technology, 0.01f);
+        CreateRelation(fuel, tourism, 0.01f);
+        CreateRelation(fuel, food, -0.01f);
+        CreateRelation(fuel, restoration, -0.01f);
 
-        CreateRelation(tourism, fuel, 1f);
-        CreateRelation(tourism, entertainment, 1f);
-        CreateRelation(tourism, restoration, -1f);
-        CreateRelation(tourism, chemicals, -1f);
+        CreateRelation(tourism, fuel, 0.01f);
+        CreateRelation(tourism, entertainment, 0.01f);
+        CreateRelation(tourism, restoration, -0.01f);
+        CreateRelation(tourism, chemicals, -0.01f);
 
-        CreateRelation(entertainment, alcohol, 1f);
-        CreateRelation(entertainment, tourism, 1f);
-        CreateRelation(entertainment, food, -1f);
-        CreateRelation(entertainment, technology, -1f);
+        CreateRelation(entertainment, alcohol, 0.01f);
+        CreateRelation(entertainment, tourism, 0.01f);
+        CreateRelation(entertainment, food, -0.01f);
+        CreateRelation(entertainment, technology, -0.01f);
 
         this.Stocks.Add(alcohol);
         this.Stocks.Add(restoration);
