@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : CharacterController
+public class PlayerController : AIAgentController
 {
-
+    void Awake()
+    {
+        GameManager.Instance.PlayerController = this;
+    }
 }

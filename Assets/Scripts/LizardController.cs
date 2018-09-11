@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LizardController : CharacterController
+public class LizardController : AIAgentController
 {
 
 }

@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public float PlayerFunds = 10000f;
     public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
 
+    // Referenes
+    public PlayerController PlayerController;
+
     // Privates
     public List<StockStationController> StockStations;
     public int PlayerSelectedStation = -1; // Initially none
@@ -107,6 +110,25 @@ public class GameManager : MonoBehaviour
 
         Debug.LogWarning("Could not find stock station " + name);
         return Vector3.zero;
+    }
+
+    /// <summary>
+    /// Set the target station for the player's index, called from left/right arrow buttons
+    /// </summary>
+    /// <param name="diff"></param>
+    public void SetPlayerTarget(int diff)
+    {
+        PlayerSelectedStation = ModFix.Mod(PlayerSelectedStation + diff, StockStations.Count);
+        StockType newType = StockManager.Instance.GetType(PlayerSelectedStation);
+        if (PlayerController)
+        {
+            PlayerController.SetMoveTarget(GetStockStationPosition(newType));
+        }
+    }
+
+    public void SetPlayerTarget(StockType stock)
+    {
+
     }
 
     void Awake()

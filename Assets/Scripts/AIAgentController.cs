@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CharacterController : MonoBehaviour
+public class AIAgentController : MonoBehaviour
 {
     protected NavMeshAgent _agent;
     protected int _selectedStationIndex; // TODO: Vaihda enumiksi
@@ -13,7 +13,7 @@ public class CharacterController : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    protected void SetMoveTarget(Vector3 target)
+    public void SetMoveTarget(Vector3 target)
     {
         _agent.SetDestination(target);
     }

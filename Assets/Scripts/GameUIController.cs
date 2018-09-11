@@ -15,11 +15,11 @@ public class GameUIController : MonoBehaviour
 
     public void PreviousStation()
     {
-        
+        GameManager.Instance.SetPlayerTarget(-1);
     }
 
     public void NextStation()
     {
-
+        GameManager.Instance.SetPlayerTarget(1);
     }
 }
