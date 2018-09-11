@@ -64,7 +64,7 @@ public class StockManager : MonoBehaviour
             {
                 Vector3 pos = new Vector3();
                 pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
-                pos.y = array[i].Remap(0f, 200f, 3.2f, 5.7f);
+                pos.y = array[i].Remap(0f, 50f, 3.2f, 5.7f);
                 positions[i] = pos;
             }
             graph.SetPositions(positions);
@@ -105,14 +105,14 @@ public class StockManager : MonoBehaviour
     /// </summary>
     private void CreateStocks()
     {
-        Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2f, 20f);
-        Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2f, 20f);
-        Stock food = new Stock(StockType.Food, 10000, 100, 2f, 20f);
-        Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2f, 20f);
-        Stock technology = new Stock(StockType.Technology, 8000, 100, 2f, 20f);
-        Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2f, 20f);
-        Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2f, 20f);
-        Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2f, 20f);
+        Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 2f, 20f);
+        Stock restoration = new Stock(StockType.Restoration, 800, 100, 2f, 20f);
+        Stock food = new Stock(StockType.Food, 1000, 100, 2f, 20f);
+        Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 2f, 20f);
+        Stock technology = new Stock(StockType.Technology, 800, 100, 2f, 20f);
+        Stock fuel = new Stock(StockType.Fuel, 1000, 100, 2f, 20f);
+        Stock tourism = new Stock(StockType.Tourism, 1200, 100, 2f, 20f);
+        Stock entertainment = new Stock(StockType.Entertainment, 800, 100, 2f, 20f);
 
         CreateRelation(alcohol, restoration, 1f);
         CreateRelation(alcohol, entertainment, 1f);

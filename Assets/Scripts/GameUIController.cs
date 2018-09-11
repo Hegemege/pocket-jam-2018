@@ -62,11 +62,15 @@ public class GameUIController : MonoBehaviour
                 GameManager.Instance.PlayerPortfolio[currentType];
             var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
 
+            var volatility = StockManager.Instance.Stocks[currentIndex].Volatility;
+
             // Update buy/sell counts and prices
             GameObject.Find("BuyText").GetComponent<Text>().text = buyPrice.ToString();
             GameObject.Find("BuyCount").GetComponent<Text>().text = buyAmount.ToString();
             GameObject.Find("SellText").GetComponent<Text>().text = sellPrice.ToString();
             GameObject.Find("SellCount").GetComponent<Text>().text = sellAmount.ToString();
+
+            GameObject.Find("VolatilityCounter").GetComponent<Text>().text = "Volatility: " + volatility.ToString();
         }
 
         GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + GameManager.Instance.PlayerFunds.ToString();

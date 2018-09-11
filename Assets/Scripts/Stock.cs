@@ -72,9 +72,8 @@ public class Stock
     public float Sell()
     {
         float currentPrice = this.SellPrice();
-        Debug.Log(this.MarketCap);
         this.MarketCap -= this.PriceChangePerTransaction;
-        Debug.Log(this.MarketCap);
+        Volatility = Volatility * 1.1f;
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedSold(rel.priceChangePerTransaction);
@@ -89,9 +88,8 @@ public class Stock
     public float Buy()
     {
         float currentPrice = this.BuyPrice();
-        Debug.Log(this.MarketCap);
         this.MarketCap += this.PriceChangePerTransaction;
-        Debug.Log(this.MarketCap);
+        Volatility = Volatility * 1.1f;
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedBought(rel.priceChangePerTransaction);
@@ -137,10 +135,16 @@ public class Stock
 
         if (!this.Closed)
         {
-            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * 5) * Volatility;
+            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time) * Volatility;
+
+            Volatility = Volatility - 1;
+            if (Volatility < 20) {
+                Volatility = 20;
+            }
 
             if (Volatility > StockManager.Instance.VolatilityThreshold)
             {
+                Debug.Log("Stock " + Name + " closed");
                 this.Closed = true;
                 this.ClosedTimer = this.Timer;
             }
