@@ -15,13 +15,17 @@ public class GameUIController : MonoBehaviour
     public Text SellPrice;
     public Text SellAmount;
 
+    public Text FundsText;
+    public Text VolatilityText;
+
     private float _buyPrice;
-    private int _buyAmount;
     private float _sellPrice;
-    private float _sellAmount;
+    private int _funds;
+    private float _volatility;
 
     private Dictionary<StockType, string> _stockNameLookup;
     private Dictionary<int, string> _integerCache;
+    private Dictionary<int, string> _floatCache; // Two decimal float cache, key is the wanted float *100f floored
 
     private int _currentPlayerSelectedStationIndex;
 
@@ -38,6 +42,9 @@ public class GameUIController : MonoBehaviour
         StockNameText.text = "";
 
         BuySellOverlay.SetActive(false);
+
+        _integerCache = new Dictionary<int, string>();
+        _floatCache = new Dictionary<int, string>();
     }
 
     void Update()
@@ -56,24 +63,45 @@ public class GameUIController : MonoBehaviour
 
         if (currentIndex != -1 && GameManager.Instance.CloseToTarget)
         {
-            var buyPrice = StockManager.Instance.Stocks[currentIndex].BuyPrice();
-            var sellPrice = StockManager.Instance.Stocks[currentIndex].SellPrice();
-            var buyAmount = StockManager.Instance.Stocks[currentIndex].AmountOnMarket -
-                GameManager.Instance.PlayerPortfolio[currentType];
-            var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
+            if (GameManager.Instance.CloseToTarget)
+            {
+                var buyPrice = StockManager.Instance.Stocks[currentIndex].BuyPrice();
+                var sellPrice = StockManager.Instance.Stocks[currentIndex].SellPrice();
+                var buyAmount = StockManager.Instance.Stocks[currentIndex].AmountOnMarket -
+                    GameManager.Instance.PlayerPortfolio[currentType];
+                var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
+
+                // Update the floats, truncated to 2 decimals
+                if (Mathf.Abs(_buyPrice - buyPrice) > 0.01f)
+                {
+                    _buyPrice = buyPrice;
+                    BuyPrice.text = GetCachedFloatTwoDecimals(buyPrice);
+                }
+
+                if (Mathf.Abs(_sellPrice - sellPrice) > 0.01f)
+                {
+                    _sellPrice = sellPrice;
+                    SellPrice.text = GetCachedFloatTwoDecimals(sellPrice);
+                }
+
+                // Buy and sell amounts
+                BuyAmount.text = GetCachedInteger(buyAmount);
+                SellAmount.text = GetCachedInteger(sellAmount);
+            }
 
             var volatility = StockManager.Instance.Stocks[currentIndex].Volatility;
+            var funds = Mathf.FloorToInt(GameManager.Instance.PlayerFunds);
 
-            // Update buy/sell counts and prices
-            GameObject.Find("BuyText").GetComponent<Text>().text = buyPrice.ToString();
-            GameObject.Find("BuyCount").GetComponent<Text>().text = buyAmount.ToString();
-            GameObject.Find("SellText").GetComponent<Text>().text = sellPrice.ToString();
-            GameObject.Find("SellCount").GetComponent<Text>().text = sellAmount.ToString();
+            // Volatility
+            if (Mathf.Abs(_volatility - volatility) > 0.01f)
+            {
+                _volatility = volatility;
+                VolatilityText.text = GetCachedFloatTwoDecimals(volatility);
+            }
 
-            GameObject.Find("VolatilityCounter").GetComponent<Text>().text = "Volatility: " + volatility.ToString();
+            // Funds
+            FundsText.text = GetCachedInteger(funds);
         }
-
-        GameObject.Find("PlayerFunds").GetComponent<Text>().text = "Funds: " + GameManager.Instance.PlayerFunds.ToString();
     }
 
     public void PreviousStation()
@@ -110,11 +138,22 @@ public class GameUIController : MonoBehaviour
         {
             return _integerCache[i];
         }
-        else
+
+        var addition = i.ToString();
+        _integerCache[i] = addition;
+        return addition;
+    }
+
+    private string GetCachedFloatTwoDecimals(float f)
+    {
+        var truncatedInteger = Mathf.FloorToInt(f * 100f);
+        if (_floatCache.ContainsKey(truncatedInteger))
         {
-            var addition = i.ToString();
-            _integerCache[i] = addition;
-            return addition;
+            return _floatCache[truncatedInteger];
         }
+
+        var addition = (truncatedInteger / 100f).ToString();
+        _floatCache[truncatedInteger] = addition;
+        return addition;
     }
 }
