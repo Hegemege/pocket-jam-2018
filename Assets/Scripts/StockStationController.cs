@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class StockStationController : MonoBehaviour
 {
-    public string StockName; // TODO: Vaihdetaan enumiksi
+    public StockType StockName; // TODO: Vaihdetaan enumiksi
 }

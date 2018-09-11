@@ -19,22 +19,14 @@ public class GameManager : MonoBehaviour
     public float PlayerFunds = 10000f;
     public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
 
-<<<<<<< HEAD
-    public bool CanBuyStock(StockType name) {
-        List<Stock> stocks = StockManager.Instance.Stocks;
-        for (int i = 0; i < stocks.Count; i++)
-=======
+    // Privates
     public List<StockStationController> StockStations;
     public int PlayerSelectedStation = -1; // Initially none
 
-    // Privates
-
-
-    public bool CanBuyStock(string name)
+    public bool CanBuyStock(StockType name)
     {
-        bool can = false;
-        StockManager.Instance.Stocks.ForEach((stock) =>
->>>>>>> a5c862258b843b9def1949400e28f8951da3a3e9
+        List<Stock> stocks = StockManager.Instance.Stocks;
+        for (int i = 0; i < stocks.Count; i++)
         {
             if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
@@ -44,12 +36,8 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-<<<<<<< HEAD
-    public bool CanSellStock(StockType name) {
-=======
-    public bool CanSellStock(string name)
+    public bool CanSellStock(StockType name)
     {
->>>>>>> a5c862258b843b9def1949400e28f8951da3a3e9
         return PlayerPortfolio[name] > 0;
     }
 
@@ -118,7 +106,8 @@ public class GameManager : MonoBehaviour
         SetupPortfolio();
     }
 
-    private void SetupPortfolio() {
+    private void SetupPortfolio()
+    {
         PlayerPortfolio.Add(StockType.Alcohol, 0);
         PlayerPortfolio.Add(StockType.Restoration, 0);
         PlayerPortfolio.Add(StockType.Food, 0);
