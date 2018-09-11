@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StockManager : MonoBehaviour
 {
+    public int VolatilityThreshold = 20;
+    public int VolatilityLockTime = 20;
 
     //Singleton
     private static StockManager _instance;
@@ -15,7 +17,13 @@ public class StockManager : MonoBehaviour
         }
     }
 
+    private LineRenderer graph;
+
     public List<Stock> Stocks = new List<Stock>();
+
+    private Dictionary<StockType, float[]> stockHistory;
+
+    private bool started = false;
 
     void Awake()
     {
@@ -32,19 +40,57 @@ public class StockManager : MonoBehaviour
         CreateStocks();
     }
 
+    void Update()
+    {
+        if (!started && GameManager.Instance.isPlaying)
+        {
+            StartCoroutine(Tick());
+            started = true;
+        }
+    }
+
+    private IEnumerator Tick()
+    {
+        while (true)
+        {
+            UpdateStocks();
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void UpdateStocks()
+    {
+        foreach (Stock stock in this.Stocks)
+        {
+            stock.Fluctuate();
+            AddToHistory(stock.Name, stock.Price);
+        }
+    }
+
+    private void AddToHistory(StockType type, float price)
+    {
+        float[] array = stockHistory[type];
+        for (int i = 0; i < array.Length; i++)
+        {
+
+            array[i] = array[i + 1];
+        }
+    }
+
     /// <summary>
     /// Initialize the stocks
     /// </summary>
     private void CreateStocks()
     {
-        Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2);
-        Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2);
-        Stock food = new Stock(StockType.Food, 10000, 100, 2);
-        Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2);
-        Stock technology = new Stock(StockType.Technology, 8000, 100, 2);
-        Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2);
-        Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2);
-        Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2);
+        Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2, 2);
+        Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2, 2);
+        Stock food = new Stock(StockType.Food, 10000, 100, 2, 2);
+        Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2, 2);
+        Stock technology = new Stock(StockType.Technology, 8000, 100, 2, 2);
+        Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2, 2);
+        Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2, 2);
+        Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2, 2);
 
         CreateRelation(alcohol, restoration, 1f);
         CreateRelation(alcohol, entertainment, 1f);
