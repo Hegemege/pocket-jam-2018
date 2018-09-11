@@ -8,20 +8,31 @@ public struct Stock
     public float PriceChangePerTransaction;
     public float MarketCap;
     public float AmountOnMarket;
+    public float Volatility;
 
     public List<StockRelation> Relations;
+
+    public bool Closed;
+
+    private int Timer;
+    private int ClosedTimer;
 
     public Stock(StockType name,
         float marketCap,
         float amountOnMarket,
         float priceChangePerTransaction,
+        float volatility,
         List<StockRelation> relations = null)
     {
         this.Name = name;
         this.MarketCap = marketCap;
         this.AmountOnMarket = amountOnMarket;
         this.PriceChangePerTransaction = priceChangePerTransaction;
+        this.Volatility = volatility;
         this.Relations = relations == null ? new List<StockRelation>() : null;
+        this.Closed = false;
+        this.Timer = 0;
+        this.ClosedTimer = -1;
     }
 
     /// <summary>
@@ -29,9 +40,9 @@ public struct Stock
     /// </summary>
     /// <param name="relation"></param>
 	public void AddRelation(StockRelation relation)
-	{
-		this.Relations.Add(relation);
-	}
+    {
+        this.Relations.Add(relation);
+    }
 
     /// <summary>
     /// Calculate the stock's price based on the market cap and the amount of stocks
@@ -60,13 +71,13 @@ public struct Stock
     /// <returns>Amount of money received from the transaction</returns>
     public float Sell()
     {
-		float currentPrice = this.Price;
+        float currentPrice = this.Price;
         this.MarketCap -= this.PriceChangePerTransaction;
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedSold(rel.priceChangePerTransaction);
         }
-		return currentPrice;
+        return currentPrice;
     }
 
     /// <summary>
@@ -75,13 +86,14 @@ public struct Stock
     /// <returns>Amount of money spent on the transaction</returns>
     public float Buy()
     {
-		float currentPrice = this.Price;
+        float currentPrice = this.Price;
         this.MarketCap += this.PriceChangePerTransaction;
         foreach (StockRelation rel in this.Relations)
         {
+            Debug.Log(rel.priceChangePerTransaction);
             rel.stock.RelatedBought(rel.priceChangePerTransaction);
         }
-		return currentPrice;
+        return currentPrice;
     }
 
     /// <summary>
@@ -95,7 +107,7 @@ public struct Stock
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedSold(rel.priceChangePerTransaction / 4);
+                rel.stock.RelatedSold(priceChange / 4);
             }
         }
     }
@@ -111,7 +123,30 @@ public struct Stock
         {
             foreach (StockRelation rel in this.Relations)
             {
-                rel.stock.RelatedBought(rel.priceChangePerTransaction / 4);
+                rel.stock.RelatedBought(priceChange / 4);
+            }
+        }
+    }
+
+    public void Fluctuate()
+    {
+        this.Timer++;
+
+        if (!this.Closed)
+        {
+            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time) * Volatility;
+
+            if (Volatility > StockManager.Instance.VolatilityThreshold)
+            {
+                this.Closed = true;
+                this.ClosedTimer = this.Timer;
+            }
+        }
+        else
+        {
+            if (this.ClosedTimer >= this.Timer + StockManager.Instance.VolatilityLockTime)
+            {
+                this.Closed = false;
             }
         }
     }
