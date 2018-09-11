@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 114660055447176888}
   m_Layer: 0
   m_Name: SM_StockStation_RESTORATION
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 114191346626262896}
   m_Layer: 0
   m_Name: SM_StockStationFull_FUEL
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -1265,7 +1265,7 @@ GameObject:
   - component: {fileID: 114636219811794860}
   m_Layer: 0
   m_Name: SM_StockStationFull_ENTERTAINMENT
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -1638,7 +1638,7 @@ GameObject:
   - component: {fileID: 114370561573142138}
   m_Layer: 0
   m_Name: SM_StockStation_FOOD
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -1687,7 +1687,7 @@ GameObject:
   - component: {fileID: 114465307293790928}
   m_Layer: 0
   m_Name: SM_StockStation_CHEMICAL
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -1867,7 +1867,7 @@ GameObject:
   - component: {fileID: 114494230101286644}
   m_Layer: 0
   m_Name: SM_StockStationFull_TECHNOLOGY
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -1884,7 +1884,7 @@ GameObject:
   - component: {fileID: 114515900752319354}
   m_Layer: 0
   m_Name: SM_StockStation_ALCOHOL
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
@@ -2235,7 +2235,7 @@ GameObject:
   - component: {fileID: 114936500411234964}
   m_Layer: 0
   m_Name: SM_StockStationFull_TOURISM
-  m_TagString: Untagged
+  m_TagString: StockStation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126

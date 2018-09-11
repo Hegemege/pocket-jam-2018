@@ -21,6 +21,12 @@ public class GameManager : MonoBehaviour
     public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
     public bool CloseToTarget;
 
+    public int LizardSpawnCount;
+
+    // Public self-references
+    public LizardPool LizardPool;
+    public BoxCollider LizardSpawnBounds;
+
     // Referenes
     public PlayerController PlayerController;
     public WorldCameraController WorldCamera;
@@ -28,6 +34,67 @@ public class GameManager : MonoBehaviour
     // Privates
     public List<StockStationController> StockStations;
     public int PlayerSelectedStation = -1; // Initially none
+
+    void Awake()
+    {
+        // Setup singleton
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+        _instance = this;
+
+        SetupPortfolio();
+        SpawnLizards();
+    }
+
+
+    /// <summary>
+    /// Initialize the player's portfolio dictionary
+    /// </summary>
+    private void SetupPortfolio()
+    {
+        PlayerPortfolio.Add(StockType.Alcohol, 0);
+        PlayerPortfolio.Add(StockType.Restoration, 0);
+        PlayerPortfolio.Add(StockType.Food, 0);
+        PlayerPortfolio.Add(StockType.Chemicals, 0);
+        PlayerPortfolio.Add(StockType.Technology, 0);
+        PlayerPortfolio.Add(StockType.Fuel, 0);
+        PlayerPortfolio.Add(StockType.Tourism, 0);
+        PlayerPortfolio.Add(StockType.Entertainment, 0);
+    }
+
+    private void SpawnLizards()
+    {
+        for (int i = 0; i < LizardSpawnCount; i++)
+        {
+            // Raycast down from the spawn bounds until we hit something we are allowed to hit
+            Vector3 spawnPoint;
+
+            while (true) // pls it works ok?
+            {
+                // Sample random point from the spawn bounds
+                var bounds = LizardSpawnBounds.bounds;
+                var randomOrigin = new Vector3(Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y), Random.Range(bounds.min.z, bounds.max.z));
+
+                RaycastHit hit;
+                if (Physics.Raycast(randomOrigin, Vector3.down, out hit, 20f))
+                {
+                    if (!hit.collider.CompareTag("StockStation"))
+                    {
+                        spawnPoint = hit.point;
+                        break;
+                    }
+                }
+            }
+
+            var lizard = LizardPool.GetPooledObject();
+            lizard.gameObject.transform.position = spawnPoint;
+        }
+    }
 
     /// <summary>
     /// Check if the player has the required funds to buy a stock
@@ -129,40 +196,5 @@ public class GameManager : MonoBehaviour
         {
             PlayerController.SetMoveTarget(GetStockStationPosition(newType));
         }
-    }
-
-    public void SetPlayerTarget(StockType stock)
-    {
-
-    }
-
-    void Awake()
-    {
-        // Setup singleton
-        if (_instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-        _instance = this;
-
-        SetupPortfolio();
-    }
-
-    /// <summary>
-    /// Initialize the player's portfolio dictionary
-    /// </summary>
-    private void SetupPortfolio()
-    {
-        PlayerPortfolio.Add(StockType.Alcohol, 0);
-        PlayerPortfolio.Add(StockType.Restoration, 0);
-        PlayerPortfolio.Add(StockType.Food, 0);
-        PlayerPortfolio.Add(StockType.Chemicals, 0);
-        PlayerPortfolio.Add(StockType.Technology, 0);
-        PlayerPortfolio.Add(StockType.Fuel, 0);
-        PlayerPortfolio.Add(StockType.Tourism, 0);
-        PlayerPortfolio.Add(StockType.Entertainment, 0);
     }
 }
