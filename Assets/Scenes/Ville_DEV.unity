@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5921569, g: 0.6156863, b: 0.67058825, a: 1}
+  m_AmbientSkyColor: {r: 0.5908241, g: 0.6163788, b: 0.6698113, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -150,7 +150,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4190843143301178, guid: 65b146cfbecf0ef4e92b4a89e2cbe28e, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65b146cfbecf0ef4e92b4a89e2cbe28e, type: 2}
@@ -192,12 +192,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4631811811883158, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69b5b1d74b8f50741b3e2099836d933b, type: 2}
   m_IsPrefabAsset: 0
---- !u!1001 &867066996
+--- !u!1001 &832779637
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -234,7 +234,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4267528293832700, guid: 02d51c63a38baba41b4f74ebf753589f, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02d51c63a38baba41b4f74ebf753589f, type: 2}
@@ -371,7 +371,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4647697024696030, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9d2f6c2b3f868743b790c4b53b33ba1, type: 2}
@@ -445,7 +445,7 @@ Transform:
   m_Children:
   - {fileID: 1083605508}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1647332659
 Prefab:
@@ -454,6 +454,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114773433917430330, guid: b8e5594cafe8f5741864d72b2ed73bd4,
+        type: 2}
+      propertyPath: StockStations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4006671845047710, guid: b8e5594cafe8f5741864d72b2ed73bd4, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
