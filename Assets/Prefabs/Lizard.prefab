@@ -130,7 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708172d7290c15e4e8fb17836cc0f037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PreferredStockType: 0
+  SpriteContainer: {fileID: 1910891931469718}
+  IdleAtTargetSeconds: 2
+  IdleAtTargetSecondsRandomness: 1
+  BaseScale: 0.65
+  ScaleRandomness: 0.125
 --- !u!195 &195596676557004876
 NavMeshAgent:
   m_ObjectHideFlags: 1
