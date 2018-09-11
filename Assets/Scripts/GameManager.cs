@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         {
             if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
+                Debug.Log("Buying " + name);
                 PlayerFunds -= stocks[i].Buy();
                 PlayerPortfolio[name]++;
                 return;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
             {
                 if (stocks[i].Name == name)
                 {
+                    Debug.Log("Selling " + name);
                     PlayerFunds += stocks[i].Sell();
                     PlayerPortfolio[name]--;
                     return;

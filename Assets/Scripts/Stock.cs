@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Stock
+public class Stock
 {
     public StockType Name;
     public float PriceChangePerTransaction;
@@ -71,8 +71,10 @@ public struct Stock
     /// <returns>Amount of money received from the transaction</returns>
     public float Sell()
     {
-        float currentPrice = this.Price;
+        float currentPrice = this.SellPrice();
+        Debug.Log(this.MarketCap);
         this.MarketCap -= this.PriceChangePerTransaction;
+        Debug.Log(this.MarketCap);
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedSold(rel.priceChangePerTransaction);
@@ -86,8 +88,10 @@ public struct Stock
     /// <returns>Amount of money spent on the transaction</returns>
     public float Buy()
     {
-        float currentPrice = this.Price;
+        float currentPrice = this.BuyPrice();
+        Debug.Log(this.MarketCap);
         this.MarketCap += this.PriceChangePerTransaction;
+        Debug.Log(this.MarketCap);
         foreach (StockRelation rel in this.Relations)
         {
             rel.stock.RelatedBought(rel.priceChangePerTransaction);
@@ -133,7 +137,7 @@ public struct Stock
 
         if (!this.Closed)
         {
-            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time) * Volatility;
+            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * 5) * Volatility;
 
             if (Volatility > StockManager.Instance.VolatilityThreshold)
             {
