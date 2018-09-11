@@ -16,51 +16,52 @@ public class GameManager : MonoBehaviour
     }
 
     public float PlayerFunds = 10000f;
-    public Dictionary<string, int> PlayerPortfolio = new Dictionary<string, int>();
+    public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
 
-    public bool CanBuyStock(string name) {
-        bool can = false;
-        StockManager.Instance.Stocks.ForEach((stock) =>
+    public bool CanBuyStock(StockType name) {
+        List<Stock> stocks = StockManager.Instance.Stocks;
+        for (int i = 0; i < stocks.Count; i++)
         {
-            if (stock.Name == name && PlayerFunds >= stock.Price)
+            if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
-                can = true;
-                return;
+                return true;
             }
-        });
-        return can;
+        }
+        return false;
     }
 
-    public bool CanSellStock(string name) {
+    public bool CanSellStock(StockType name) {
         return PlayerPortfolio[name] > 0;
     }
 
-    public void BuyStock(string name)
+    public void BuyStock(StockType name)
     {
-        StockManager.Instance.Stocks.ForEach((stock) =>
+        List<Stock> stocks = StockManager.Instance.Stocks;
+        for (int i = 0; i < stocks.Count; i++)
         {
-            if (stock.Name == name && PlayerFunds >= stock.Price)
+            if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
-                PlayerFunds -= stock.Buy();
+                PlayerFunds -= stocks[i].Buy();
                 PlayerPortfolio[name]++;
                 return;
             }
-        });
+        }
     }
 
-    public void SellStock(string name)
+    public void SellStock(StockType name)
     {
         if (PlayerPortfolio[name] > 0)
         {
-            StockManager.Instance.Stocks.ForEach((stock) =>
+            List<Stock> stocks = StockManager.Instance.Stocks;
+            for (int i = 0; i < stocks.Count; i++)
             {
-                if (stock.Name == name)
+                if (stocks[i].Name == name)
                 {
-                    PlayerFunds += stock.Sell();
+                    PlayerFunds += stocks[i].Sell();
                     PlayerPortfolio[name]--;
                     return;
                 }
-            });
+            }
         }
     }
 
@@ -75,7 +76,18 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         _instance = this;
+
+        SetupPortfolio();
     }
 
-
+    private void SetupPortfolio() {
+        PlayerPortfolio.Add(StockType.Alcohol, 0);
+        PlayerPortfolio.Add(StockType.Restoration, 0);
+        PlayerPortfolio.Add(StockType.Food, 0);
+        PlayerPortfolio.Add(StockType.Chemicals, 0);
+        PlayerPortfolio.Add(StockType.Technology, 0);
+        PlayerPortfolio.Add(StockType.Fuel, 0);
+        PlayerPortfolio.Add(StockType.Tourism, 0);
+        PlayerPortfolio.Add(StockType.Entertainment, 0);
+    }
 }
