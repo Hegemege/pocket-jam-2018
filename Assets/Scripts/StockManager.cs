@@ -31,6 +31,9 @@ public class StockManager : MonoBehaviour {
 		CreateStocks();
     }
 
+	/// <summary>
+	/// Initialize the stocks
+	/// </summary>
 	private void CreateStocks () {
 		Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2);
 		Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2);
@@ -91,6 +94,12 @@ public class StockManager : MonoBehaviour {
 		this.Stocks.Add(entertainment);
 	}
 
+	/// <summary>
+	/// Create a relationship between two stocks
+	/// </summary>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	/// <param name="multiplier"></param>
 	private void CreateRelation(Stock from, Stock to, float multiplier)
 	{
 		StockRelation rel;

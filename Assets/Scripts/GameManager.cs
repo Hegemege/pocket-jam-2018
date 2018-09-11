@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     public List<StockStationController> StockStations;
     public int PlayerSelectedStation = -1; // Initially none
 
+    /// <summary>
+    /// Check if the player has the required funds to buy a stock
+    /// </summary>
+    /// <param name="name">Stock name</param>
+    /// <returns></returns>
     public bool CanBuyStock(StockType name)
     {
         List<Stock> stocks = StockManager.Instance.Stocks;
@@ -36,11 +41,20 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Check if the player has a stock of the chosen type to sell
+    /// </summary>
+    /// <param name="name">Stock name</param>
+    /// <returns></returns>
     public bool CanSellStock(StockType name)
     {
         return PlayerPortfolio[name] > 0;
     }
 
+    /// <summary>
+    /// Buy a stock of the chosen type if able, and add it to the portfolio
+    /// </summary>
+    /// <param name="name">Stock name</param>
     public void BuyStock(StockType name)
     {
         List<Stock> stocks = StockManager.Instance.Stocks;
@@ -55,6 +69,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sell a stock of the chosen type if able, and remove it from the portfolio
+    /// </summary>
+    /// <param name="name">Stock name</param>
     public void SellStock(StockType name)
     {
         if (PlayerPortfolio[name] > 0)
@@ -106,6 +124,9 @@ public class GameManager : MonoBehaviour
         SetupPortfolio();
     }
 
+    /// <summary>
+    /// Initialize the player's portfolio dictionary
+    /// </summary>
     private void SetupPortfolio()
     {
         PlayerPortfolio.Add(StockType.Alcohol, 0);

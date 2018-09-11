@@ -24,11 +24,19 @@ public struct Stock
         this.Relations = relations == null ? new List<StockRelation>() : null;
     }
 
+    /// <summary>
+    /// Add a relationship between this stock and another one
+    /// </summary>
+    /// <param name="relation"></param>
 	public void AddRelation(StockRelation relation)
 	{
 		this.Relations.Add(relation);
 	}
 
+    /// <summary>
+    /// Calculate the stock's price based on the market cap and the amount of stocks
+    /// </summary>
+    /// <value></value>
     public float Price
     {
         get
@@ -36,6 +44,7 @@ public struct Stock
             return MarketCap / AmountOnMarket;
         }
     }
+
     public float SellPrice()
     {
         return Price * 0.95f;
@@ -45,6 +54,10 @@ public struct Stock
         return Price * 1.05f;
     }
 
+    /// <summary>
+    /// Do one "sell" operation on this stock and cause its effects
+    /// </summary>
+    /// <returns>Amount of money received from the transaction</returns>
     public float Sell()
     {
 		float currentPrice = this.Price;
@@ -56,6 +69,10 @@ public struct Stock
 		return currentPrice;
     }
 
+    /// <summary>
+    /// Do one "buy" operation on this stock and cause its effects
+    /// </summary>
+    /// <returns>Amount of money spent on the transaction</returns>
     public float Buy()
     {
 		float currentPrice = this.Price;
@@ -67,6 +84,10 @@ public struct Stock
 		return currentPrice;
     }
 
+    /// <summary>
+    /// Propagate effects of a stock sold
+    /// </summary>
+    /// <param name="priceChange"></param>
     public void RelatedSold(float priceChange)
     {
         this.MarketCap -= priceChange;
@@ -79,6 +100,10 @@ public struct Stock
         }
     }
 
+    /// <summary>
+    /// Propagate effects of a stock bought
+    /// </summary>
+    /// <param name="priceChange"></param>
     public void RelatedBought(float priceChange)
     {
         this.MarketCap += priceChange;
