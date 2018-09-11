@@ -7,7 +7,7 @@ public struct Stock
     public StockType Name;
     public float PriceChangePerTransaction;
     public float MarketCap;
-    public float AmountOnMarket;
+    public int AmountOnMarket;
     public float Volatility;
 
     public List<StockRelation> Relations;
@@ -19,7 +19,7 @@ public struct Stock
 
     public Stock(StockType name,
         float marketCap,
-        float amountOnMarket,
+        int amountOnMarket,
         float priceChangePerTransaction,
         float volatility,
         List<StockRelation> relations = null)
@@ -52,7 +52,7 @@ public struct Stock
     {
         get
         {
-            return MarketCap / AmountOnMarket;
+            return MarketCap / (float)AmountOnMarket;
         }
     }
 

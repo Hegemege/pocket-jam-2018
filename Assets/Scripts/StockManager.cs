@@ -104,14 +104,14 @@ public class StockManager : MonoBehaviour
     /// </summary>
     private void CreateStocks()
     {
-        Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2, 2);
-        Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2, 2);
-        Stock food = new Stock(StockType.Food, 10000, 100, 2, 2);
-        Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2, 2);
-        Stock technology = new Stock(StockType.Technology, 8000, 100, 2, 2);
-        Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2, 2);
-        Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2, 2);
-        Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2, 2);
+        Stock alcohol = new Stock(StockType.Alcohol, 12000, 100, 2f, 2f);
+        Stock restoration = new Stock(StockType.Restoration, 8000, 100, 2f, 2f);
+        Stock food = new Stock(StockType.Food, 10000, 100, 2f, 2f);
+        Stock chemicals = new Stock(StockType.Chemicals, 12000, 100, 2f, 2f);
+        Stock technology = new Stock(StockType.Technology, 8000, 100, 2f, 2f);
+        Stock fuel = new Stock(StockType.Fuel, 10000, 100, 2f, 2f);
+        Stock tourism = new Stock(StockType.Tourism, 12000, 100, 2f, 2f);
+        Stock entertainment = new Stock(StockType.Entertainment, 8000, 100, 2f, 2f);
 
         CreateRelation(alcohol, restoration, 1f);
         CreateRelation(alcohol, entertainment, 1f);

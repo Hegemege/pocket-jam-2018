@@ -15,7 +15,13 @@ public class GameUIController : MonoBehaviour
     public Text SellPrice;
     public Text SellAmount;
 
+    private float _buyPrice;
+    private int _buyAmount;
+    private float _sellPrice;
+    private float _sellAmount;
+
     private Dictionary<StockType, string> _stockNameLookup;
+    private Dictionary<int, string> _integerCache;
 
     private int _currentPlayerSelectedStationIndex;
 
@@ -36,13 +42,26 @@ public class GameUIController : MonoBehaviour
 
     void Update()
     {
+        var currentIndex = GameManager.Instance.PlayerSelectedStation;
+        if (currentIndex == -1) return;
+
+        var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
+
         if (GameManager.Instance.PlayerSelectedStation != _currentPlayerSelectedStationIndex)
         {
-            var nextType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
-            StockNameText.text = _stockNameLookup[nextType];
+            StockNameText.text = _stockNameLookup[currentType];
         }
 
         BuySellOverlay.gameObject.SetActive(GameManager.Instance.CloseToTarget);
+
+        var buyPrice = StockManager.Instance.Stocks[currentIndex].BuyPrice();
+        var sellPrice = StockManager.Instance.Stocks[currentIndex].SellPrice();
+        var buyAmount = StockManager.Instance.Stocks[currentIndex].AmountOnMarket -
+            GameManager.Instance.PlayerPortfolio[currentType];
+        var sellAmount = GameManager.Instance.PlayerPortfolio[currentType];
+
+        // Update buy/sell counts and prices
+
     }
 
     public void PreviousStation()
@@ -70,6 +89,20 @@ public class GameUIController : MonoBehaviour
         if (GameManager.Instance.CanSellStock(currentType))
         {
             GameManager.Instance.SellStock(currentType);
+        }
+    }
+
+    private string GetCachedInteger(int i)
+    {
+        if (_integerCache.ContainsKey(i))
+        {
+            return _integerCache[i];
+        }
+        else
+        {
+            var addition = i.ToString();
+            _integerCache[i] = addition;
+            return addition;
         }
     }
 }
