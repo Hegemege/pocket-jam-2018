@@ -17,13 +17,11 @@ public class StockManager : MonoBehaviour
         }
     }
 
-    private LineRenderer graph;
+    public LineRenderer graph;
 
     public List<Stock> Stocks = new List<Stock>();
 
-    private Dictionary<StockType, float[]> stockHistory;
-
-    private bool started = false;
+    private Dictionary<StockType, float[]> stockHistory = new Dictionary<StockType, float[]>();
 
     void Awake()
     {
@@ -38,39 +36,38 @@ public class StockManager : MonoBehaviour
         _instance = this;
 
         CreateStocks();
-    }
-
-    void Update()
-    {
-        if (!started && GameManager.Instance.isPlaying)
-        {
-            StartCoroutine(Tick());
-            started = true;
-        }
+        StartCoroutine(Tick());
     }
 
     private IEnumerator Tick()
     {
         while (true)
         {
-            UpdateStocks();
-            UpdateGraph();
+            Debug.Log(GameManager.Instance.isPlaying);
+            if (GameManager.Instance.isPlaying)
+            {
+                UpdateStocks();
+                UpdateGraph();
+            }
             yield return new WaitForSeconds(1f);
         }
     }
 
     private void UpdateGraph()
     {
-        float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
-        Vector3[] positions = new Vector3[array.Length];
-        for (int i = 0; i < array.Length; i++)
+        if (GameManager.Instance.PlayerSelectedStation == 0)
         {
-            Vector3 pos = new Vector3();
-            pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
-            pos.y = array[i].Remap(0f, 1000f, 3.2f, 5.7f);
-            positions[i] = pos;
+            float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
+            Vector3[] positions = new Vector3[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                Vector3 pos = new Vector3();
+                pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
+                pos.y = array[i].Remap(0f, 1000f, 3.2f, 5.7f);
+                positions[i] = pos;
+            }
+            graph.SetPositions(positions);
         }
-        graph.SetPositions(positions);
     }
 
     private void UpdateStocks()
@@ -84,19 +81,22 @@ public class StockManager : MonoBehaviour
 
     private void AddToHistory(StockType type, float price)
     {
-        float[] array = stockHistory[type];
-        for (int i = 0; i < array.Length; i++)
+        if (type != StockType.None)
         {
-            if (i < array.Length - 1)
+            float[] array = stockHistory[type];
+            for (int i = 0; i < array.Length; i++)
             {
-                array[i] = array[i + 1];
+                if (i < array.Length - 1)
+                {
+                    array[i] = array[i + 1];
+                }
+                if (i == array.Length - 1)
+                {
+                    array[i] = price;
+                }
             }
-            if (i == array.Length - 1)
-            {
-                array[i] = price;
-            }
+            stockHistory[type] = array;
         }
-        stockHistory[type] = array;
     }
 
     /// <summary>
@@ -161,6 +161,15 @@ public class StockManager : MonoBehaviour
         this.Stocks.Add(fuel);
         this.Stocks.Add(tourism);
         this.Stocks.Add(entertainment);
+
+        this.stockHistory.Add(StockType.Alcohol, new float[100]);
+        this.stockHistory.Add(StockType.Restoration, new float[100]);
+        this.stockHistory.Add(StockType.Food, new float[100]);
+        this.stockHistory.Add(StockType.Chemicals, new float[100]);
+        this.stockHistory.Add(StockType.Technology, new float[100]);
+        this.stockHistory.Add(StockType.Fuel, new float[100]);
+        this.stockHistory.Add(StockType.Tourism, new float[100]);
+        this.stockHistory.Add(StockType.Entertainment, new float[100]);
     }
 
     /// <summary>

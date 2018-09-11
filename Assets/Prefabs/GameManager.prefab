@@ -110,6 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f745e0f16715c0428fb110a7c1b9893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VolatilityThreshold: 20
+  VolatilityLockTime: 20
+  graph: {fileID: 0}
 --- !u!114 &114773433917430330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,6 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerFunds: 10000
+  isPlaying: 1
+  CloseToTarget: 0
   PlayerController: {fileID: 0}
   WorldCamera: {fileID: 0}
   StockStations:
