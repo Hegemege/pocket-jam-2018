@@ -1,16 +1,14 @@
 fileFormatVersion: 2
-guid: 440b68d3cb4c99c4998f77968eae8268
+guid: ebb753ac852e4e04383c18354ae531c2
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Rail_Top
-    2100002: PigPink
-    2100004: Default
+    2100000: Default
     2300000: //RootNode
     3300000: //RootNode
-    4300000: DoorWay
+    4300000: Plane
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -50,7 +48,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
