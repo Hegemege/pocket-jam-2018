@@ -10,6 +10,10 @@ public class AIAgentController : MonoBehaviour
 
     protected SpriteRenderer[] _sprites;
 
+    protected bool _active;
+    protected Vector3 _target;
+    protected float _deactivateDistance = 5f;
+
     protected virtual void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -20,17 +24,34 @@ public class AIAgentController : MonoBehaviour
     {
         if (GameManager.Instance.WorldCamera == null) return;
 
+        // Make sprites align towards camera
         var cameraForwardOnZ = Vector3.ProjectOnPlane(GameManager.Instance.WorldCamera.transform.forward, Vector3.up);
-
         for (var i = 0; i < _sprites.Length; i++)
         {
             _sprites[i].transform.rotation =
                 Quaternion.LookRotation(cameraForwardOnZ, Vector3.up);
         }
+
+        // Deactivate when close enough to target. Enable UI
+        if (Vector3.Distance(transform.position, _target) < _deactivateDistance && _active)
+        {
+            ReachedTarget();
+            _active = false;
+            _agent.isStopped = true;
+        }
+    }
+
+    protected virtual void ReachedTarget()
+    {
+
     }
 
     public void SetMoveTarget(Vector3 target)
     {
+        _active = true;
+        _target = target;
+        _agent.isStopped = false;
+        GameManager.Instance.CloseToTarget = false;
         _agent.SetDestination(target);
     }
 }

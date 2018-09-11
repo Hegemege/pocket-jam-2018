@@ -10,4 +10,9 @@ public class PlayerController : AIAgentController
         base.Awake();
         GameManager.Instance.PlayerController = this;
     }
+
+    protected override void ReachedTarget()
+    {
+        GameManager.Instance.CloseToTarget = true;
+    }
 }
