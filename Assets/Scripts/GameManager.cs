@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Vector3 GetStockStationPosition(string name)
+    public Vector3 GetStockStationPosition(StockType name)
     {
         for (var i = 0; i < StockStations.Count; i++)
         {
