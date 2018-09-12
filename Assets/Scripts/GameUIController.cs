@@ -8,6 +8,9 @@ public class GameUIController : MonoBehaviour
 {
     public Image StockGraph;
     public GameObject BuySellOverlay;
+    public GameObject BuyButton;
+    public GameObject SellButton;
+    public GameObject ClosedText;
     public Text StockNameText;
 
     public Text BuyPrice;
@@ -53,6 +56,7 @@ public class GameUIController : MonoBehaviour
         VolatilityLabel.SetActive(false);
 
         BuySellOverlay.SetActive(false);
+        ClosedText.SetActive(false);
     }
 
     void Update()
@@ -74,6 +78,20 @@ public class GameUIController : MonoBehaviour
 
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
 
+        // Set button activity
+        BuyButton.SetActive(GameManager.Instance.CanBuyStock(currentType));
+        SellButton.SetActive(GameManager.Instance.CanSellStock(currentType));
+
+        var closed = StockManager.Instance.Stocks[GameManager.Instance.PlayerSelectedStation].Closed;
+        ClosedText.SetActive(false);
+
+        if (closed)
+        {
+            ClosedText.SetActive(true);
+            BuyButton.SetActive(false);
+            SellButton.SetActive(false);
+        }
+
         // Update the name of the stock station
         if (GameManager.Instance.PlayerSelectedStation != _currentPlayerSelectedStationIndex)
         {
@@ -82,7 +100,7 @@ public class GameUIController : MonoBehaviour
 
         BuySellOverlay.gameObject.SetActive(GameManager.Instance.CloseToTarget);
 
-        if (currentIndex != -1 && GameManager.Instance.CloseToTarget)
+        if (currentIndex != -1)
         {
             if (GameManager.Instance.CloseToTarget)
             {
