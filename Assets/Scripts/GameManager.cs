@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     // Public self-references
     public LizardPool LizardPool;
     public BoxCollider LizardSpawnBounds;
+    public GenericObjectPool BuySFXPool;
+    public GenericObjectPool SellSFXPool;
 
     // Referenes
     public PlayerController PlayerController;
@@ -135,7 +137,6 @@ public class GameManager : MonoBehaviour
         {
             if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
-                Debug.Log("Buying " + name);
                 PlayerFunds -= stocks[i].Buy();
                 PlayerPortfolio[name]++;
                 return;
@@ -156,7 +157,6 @@ public class GameManager : MonoBehaviour
             {
                 if (stocks[i].Name == name)
                 {
-                    Debug.Log("Selling " + name);
                     PlayerFunds += stocks[i].Sell();
                     PlayerPortfolio[name]--;
                     return;
