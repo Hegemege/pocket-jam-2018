@@ -18,6 +18,8 @@ public class GameUIController : MonoBehaviour
     public Text FundsText;
     public Text VolatilityText;
 
+    public RectTransform PanicBar;
+
     public GameObject VolatilityLabel;
 
     private float _buyPrice;
@@ -55,6 +57,12 @@ public class GameUIController : MonoBehaviour
 
     void Update()
     {
+        // Update panic bar
+        var panic = StockManager.Instance.TotalPanic;
+        var panicT = panic.Remap(0f, StockManager.Instance.PanicMaximum, 0f, 1f);
+        panicT = Mathf.Clamp(panicT, 0f, 1f);
+        PanicBar.anchorMax = new Vector2(panicT, 1f);
+
         var currentIndex = GameManager.Instance.PlayerSelectedStation;
         if (currentIndex == -1) return;
 
