@@ -17,6 +17,13 @@ public class Stock
     private int Timer;
     private int ClosedTimer;
 
+    private float[] VolatilityFluctuationTimeMultipliers;
+    private float[] VolatilityFluctuationScales;
+    private float[] VolatilityFluctuationOffsets;
+
+    private float startingMarketCap;
+    private float startingVolatility;
+
     public Stock(StockType name,
         float marketCap,
         int amountOnMarket,
@@ -33,6 +40,21 @@ public class Stock
         this.Closed = false;
         this.Timer = 0;
         this.ClosedTimer = -1;
+        this.startingMarketCap = this.MarketCap;
+        this.startingVolatility = this.Volatility;
+        SetupVolatilityValues();
+    }
+
+    private void SetupVolatilityValues() {
+        int length = StockManager.Instance.VolatilityFluctuationOffsetsMax.Length;
+        VolatilityFluctuationTimeMultipliers = new float[length];
+        VolatilityFluctuationScales = new float[length];
+        VolatilityFluctuationOffsets = new float[length];
+        for (int i = 0; i < length; i++) {
+            VolatilityFluctuationTimeMultipliers[i] = Random.Range(StockManager.Instance.VolatilityFluctuationTimeMultipliersMin[i], StockManager.Instance.VolatilityFluctuationTimeMultipliersMax[i]);
+            VolatilityFluctuationScales[i] = Random.Range(StockManager.Instance.VolatilityFluctuationScalesMin[i], StockManager.Instance.VolatilityFluctuationScalesMax[i]);
+            VolatilityFluctuationOffsets[i] = Random.Range(StockManager.Instance.VolatilityFluctuationOffsetsMin[i], StockManager.Instance.VolatilityFluctuationOffsetsMax[i]);
+        }
     }
 
     /// <summary>
@@ -147,9 +169,9 @@ public class Stock
 
         if (!this.Closed)
         {
-            for (int i = 0; i < StockManager.Instance.VolatilityFluctuationTimeMultipliers.Length; i++)
+            for (int i = 0; i < this.VolatilityFluctuationTimeMultipliers.Length; i++)
             {
-                this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * StockManager.Instance.VolatilityFluctuationTimeMultipliers[i] + StockManager.Instance.VolatilityFluctuationOffsets[i]) * Volatility * StockManager.Instance.VolatilityFluctuationScales[i];
+                this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * this.VolatilityFluctuationTimeMultipliers[i] + this.VolatilityFluctuationOffsets[i]) * Volatility * this.VolatilityFluctuationScales[i];
             }
 
             Volatility = Volatility * StockManager.Instance.VolatilityDecay;
@@ -171,8 +193,11 @@ public class Stock
         }
         else
         {
-            if (this.ClosedTimer >= this.Timer + StockManager.Instance.VolatilityLockTime)
+            if (this.Timer >= this.ClosedTimer + StockManager.Instance.VolatilityLockTime)
             {
+                Debug.Log("Stock " + Name + " reopened");
+                this.Volatility = this.startingVolatility;
+                this.MarketCap = this.startingMarketCap;
                 this.Closed = false;
             }
         }

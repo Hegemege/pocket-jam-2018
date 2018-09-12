@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     private void SetupPortfolio()
     {
         PlayerPortfolio.Add(StockType.Alcohol, 0);
-        PlayerPortfolio.Add(StockType.Restoration, 0);
+        PlayerPortfolio.Add(StockType.Restaurants, 0);
         PlayerPortfolio.Add(StockType.Food, 0);
         PlayerPortfolio.Add(StockType.Chemicals, 0);
         PlayerPortfolio.Add(StockType.Technology, 0);
