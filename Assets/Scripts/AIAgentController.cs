@@ -14,8 +14,11 @@ public class AIAgentController : MonoBehaviour
     protected Vector3 _target;
     protected float _deactivateDistance = 5.5f;
 
+    protected Animator _anim;
+
     protected virtual void Awake()
     {
+        _anim = GetComponentInChildren<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _sprites = GetComponentsInChildren<SpriteRenderer>();
     }
@@ -44,11 +47,12 @@ public class AIAgentController : MonoBehaviour
 
     protected virtual void ReachedTarget()
     {
-
+        _anim.SetBool("Walk", false);
     }
 
     public virtual void SetMoveTarget(Vector3 target)
     {
+        _anim.SetBool("Walk", true);
         _active = true;
         _target = target;
         _agent.isStopped = false;
