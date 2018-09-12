@@ -14,6 +14,8 @@ public class AIAgentController : MonoBehaviour
     protected Vector3 _target;
     protected float _deactivateDistance = 5.5f;
 
+    public GameObject _spriteObject;
+
     protected Animator _anim;
 
     protected virtual void Awake()
@@ -21,6 +23,7 @@ public class AIAgentController : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
         _agent = GetComponent<NavMeshAgent>();
         _sprites = GetComponentsInChildren<SpriteRenderer>();
+
     }
 
     protected virtual void Update()
@@ -42,6 +45,20 @@ public class AIAgentController : MonoBehaviour
             ReachedTarget();
             _active = false;
             _agent.isStopped = true;
+        }
+
+        var dir = transform.forward - _target;
+        if (dir.z > 3f) {
+            _anim.SetInteger("UpDown", 1);
+        } else if (dir.z < -3f) {
+            _anim.SetInteger("UpDown", -1);
+        } else {
+            _anim.SetInteger("UpDown", 0);
+        }
+        if (dir.x > 0) {
+            _spriteObject.transform.localScale = new Vector3(1, 1, 1);
+        } else {
+            _spriteObject.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
