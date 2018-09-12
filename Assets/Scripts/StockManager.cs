@@ -101,8 +101,8 @@ public class StockManager : MonoBehaviour
             for (int i = 0; i < array.Length; i++)
             {
                 Vector3 pos = new Vector3();
-                pos.x = ((float)i).Remap(0f, 99f, -viewWidth / 2f + 0.1f, viewWidth / 2f - 0.1f);
-                pos.y = array[i].Remap(0f, largest * 2, 3.2f, 5.7f);
+                pos.x = ((float)i).Remap(0f, 99f, -viewWidth / 2f + 1f, viewWidth / 2f - 1f);
+                pos.y = array[i].Remap(0f, largest * 2, 4.2f, 5.7f);
                 positions[i] = pos;
             }
             graph.SetPositions(positions);
