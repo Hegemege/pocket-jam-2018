@@ -249,13 +249,38 @@ MonoBehaviour:
   MinVolatility: 20
   VolatilityDecay: 0.98
   VolatilityIncrease: 1.05
-  VolatilityFluctuationTimeMultiplier: 1
+  VolatilityFluctuationTimeMultipliers:
+  - 1
+  - 1.2
+  - 5
+  - 100
+  - 0.7
+  - 200
+  - 500
+  VolatilityFluctuationScales:
+  - 1
+  - 1.2
+  - 1.5
+  - 0.5
+  - 0.8
+  - 20
+  - 15
+  VolatilityFluctuationOffsets:
+  - 10
+  - 14
+  - 25
+  - 100
+  - 32
+  - 12
+  - 5
   StockSellPriceMultiplier: 0.95
   StockBuyPriceMultiplier: 1.05
+  StockSellPriceAbsoluteChange: -1
+  StockBuyPriceAbsoluteChange: 1
   StockPriceChangeDistanceDecay: 0.25
   StockPriceChangeDistanceMinValue: 0.001
-  VolatilityRandomChangeBottom: 0.995
-  VolatilityRandomChangeTop: 1.005
+  VolatilityRandomChangeBottom: 0.8
+  VolatilityRandomChangeTop: 1.2
   StockPriceRandomChangeBottom: 0.995
   StockPriceRandomChangeTop: 1.005
 --- !u!114 &114274565428311694

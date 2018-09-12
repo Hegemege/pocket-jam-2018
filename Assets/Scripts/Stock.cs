@@ -80,6 +80,7 @@ public class Stock
     public float Sell()
     {
         float currentPrice = this.SellPrice();
+        this.MarketCap += StockManager.Instance.StockSellPriceAbsoluteChange * AmountOnMarket;
         this.MarketCap = this.MarketCap * (1 - this.PriceChangePerTransaction) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop);
         Volatility = Volatility * StockManager.Instance.VolatilityIncrease * Random.Range(StockManager.Instance.VolatilityRandomChangeBottom, StockManager.Instance.VolatilityRandomChangeTop);
         foreach (StockRelation rel in this.Relations)
@@ -96,6 +97,7 @@ public class Stock
     public float Buy()
     {
         float currentPrice = this.BuyPrice();
+        this.MarketCap += StockManager.Instance.StockBuyPriceAbsoluteChange * AmountOnMarket;
         this.MarketCap = (this.MarketCap * (1 + this.PriceChangePerTransaction) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
         Volatility = Volatility * StockManager.Instance.VolatilityIncrease * Random.Range(StockManager.Instance.VolatilityRandomChangeBottom, StockManager.Instance.VolatilityRandomChangeTop);
         foreach (StockRelation rel in this.Relations)
@@ -111,6 +113,7 @@ public class Stock
     /// <param name="priceChange"></param>
     public void RelatedSold(float priceChange)
     {
+        this.MarketCap += StockManager.Instance.StockSellPriceAbsoluteChange * AmountOnMarket;
         this.MarketCap = (this.MarketCap * (1 - priceChange) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
         if (Mathf.Abs(priceChange) > StockManager.Instance.StockPriceChangeDistanceMinValue)
         {
@@ -127,6 +130,7 @@ public class Stock
     /// <param name="priceChange"></param>
     public void RelatedBought(float priceChange)
     {
+        this.MarketCap += StockManager.Instance.StockBuyPriceAbsoluteChange * AmountOnMarket;
         this.MarketCap = (this.MarketCap * (1 + priceChange) * Random.Range(StockManager.Instance.StockPriceRandomChangeBottom, StockManager.Instance.StockPriceRandomChangeTop));
         if (Mathf.Abs(priceChange) > StockManager.Instance.StockPriceChangeDistanceMinValue)
         {
@@ -143,7 +147,10 @@ public class Stock
 
         if (!this.Closed)
         {
-            this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * StockManager.Instance.VolatilityFluctuationTimeMultiplier) * Volatility;
+            for (int i = 0; i < StockManager.Instance.VolatilityFluctuationTimeMultipliers.Length; i++)
+            {
+                this.MarketCap = this.MarketCap + Mathf.Sin(Time.time * StockManager.Instance.VolatilityFluctuationTimeMultipliers[i] + StockManager.Instance.VolatilityFluctuationOffsets[i]) * Volatility * StockManager.Instance.VolatilityFluctuationScales[i];
+            }
 
             Volatility = Volatility * StockManager.Instance.VolatilityDecay;
             if (Volatility < StockManager.Instance.MinVolatility)
