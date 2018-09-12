@@ -111,7 +111,10 @@ public class GameManager : MonoBehaviour
         {
             if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
-                return true;
+                if (!stocks[i].Closed)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -124,7 +127,18 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     public bool CanSellStock(StockType name)
     {
-        return PlayerPortfolio[name] > 0;
+        List<Stock> stocks = StockManager.Instance.Stocks;
+        for (int i = 0; i < stocks.Count; i++)
+        {
+            if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
+            {
+                if (!stocks[i].Closed)
+                {
+                    return PlayerPortfolio[name] > 0;
+                }
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -138,9 +152,12 @@ public class GameManager : MonoBehaviour
         {
             if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
             {
-                PlayerFunds -= stocks[i].Buy();
-                PlayerPortfolio[name]++;
-                return;
+                if (!stocks[i].Closed)
+                {
+                    PlayerFunds -= stocks[i].Buy();
+                    PlayerPortfolio[name]++;
+                    return;
+                }
             }
         }
     }
@@ -158,9 +175,12 @@ public class GameManager : MonoBehaviour
             {
                 if (stocks[i].Name == name)
                 {
-                    PlayerFunds += stocks[i].Sell();
-                    PlayerPortfolio[name]--;
-                    return;
+                    if (!stocks[i].Closed)
+                    {
+                        PlayerFunds += stocks[i].Sell();
+                        PlayerPortfolio[name]--;
+                        return;
+                    }
                 }
             }
         }
