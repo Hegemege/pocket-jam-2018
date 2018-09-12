@@ -132,6 +132,8 @@ public class GameUIController : MonoBehaviour
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
         if (GameManager.Instance.CanBuyStock(currentType))
         {
+            var sfx = GameManager.Instance.BuySFXPool.GetPooledObject();
+            sfx.SetActive(true);
             GameManager.Instance.BuyStock(currentType);
         }
     }
@@ -141,6 +143,8 @@ public class GameUIController : MonoBehaviour
         var currentType = StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation);
         if (GameManager.Instance.CanSellStock(currentType))
         {
+            var sfx = GameManager.Instance.SellSFXPool.GetPooledObject();
+            sfx.SetActive(true);
             GameManager.Instance.SellStock(currentType);
         }
     }
