@@ -74,25 +74,25 @@ public class Stock
     {
         get
         {
-            if (MarketCap > 0f)
+            if (MarketCap > 0.5f)
             {
                 return MarketCap / (float)AmountOnMarket;
             }
-            return 0f;
+            return 0.5f;
         }
     }
 
     public float SellPrice()
     {
         float sellPrice = Price * StockManager.Instance.StockSellPriceMultiplier;
-        if (sellPrice > 0) return sellPrice;
-        return 0f;
+        if (sellPrice > 0.5f) return sellPrice;
+        return 0.5f;
     }
     public float BuyPrice()
     {
         float buyPrice = Price * StockManager.Instance.StockBuyPriceMultiplier;
-        if (buyPrice > 0) return buyPrice;
-        return 0f;
+        if (buyPrice > 0.5f) return buyPrice;
+        return 0.5f;
     }
 
     /// <summary>
