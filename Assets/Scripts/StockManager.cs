@@ -11,9 +11,13 @@ public class StockManager : MonoBehaviour
     public int MinVolatility = 20;
     public float VolatilityDecay = 0.98f;
     public float VolatilityIncrease = 1.05f;
-    public float VolatilityFluctuationTimeMultiplier = 1f;
+    public float[] VolatilityFluctuationTimeMultipliers;
+    public float[] VolatilityFluctuationScales;
+    public float[] VolatilityFluctuationOffsets;
     public float StockSellPriceMultiplier = 0.95f;
     public float StockBuyPriceMultiplier = 1.05f;
+    public float StockSellPriceAbsoluteChange = -1f;
+    public float StockBuyPriceAbsoluteChange = 1f;
     public float StockPriceChangeDistanceDecay = 0.25f;
     public float StockPriceChangeDistanceMinValue = 0.001f;
     public float VolatilityRandomChangeBottom = 0.995f;
