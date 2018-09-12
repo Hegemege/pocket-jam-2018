@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StockManager : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class StockManager : MonoBehaviour
         if (TotalPanic >= PanicMaximum)
         {
             GameManager.Instance.gameWon = true;
+            SceneManager.LoadScene("credits");
             Debug.Log("Game won!");
         }
 
