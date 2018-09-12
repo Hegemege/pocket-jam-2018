@@ -5,10 +5,10 @@ using UnityEngine;
 public class StockManager : MonoBehaviour
 {
     public float OperationsPerSecond = 1f;
-    public int VolatilityThreshold = 500;
-    public int VolatilityLockTime = 500;
-    public int MaxVolatility = 600;
-    public int MinVolatility = 20;
+    public float VolatilityThreshold = 500f;
+    public float VolatilityLockTime = 500f;
+    public float MaxVolatility = 600f;
+    public float MinVolatility = 20f;
     public float VolatilityDecay = 0.98f;
     public float VolatilityIncrease = 1.05f;
     public float[] VolatilityFluctuationTimeMultipliersMin;
@@ -27,6 +27,15 @@ public class StockManager : MonoBehaviour
     public float VolatilityRandomChangeTop = 1.005f;
     public float StockPriceRandomChangeBottom = 0.995f;
     public float StockPriceRandomChangeTop = 1.005f;
+
+    public float StartingPanic = 0f;
+    public float PanicPerLock = 10f;
+    public float PanicAdditionMultiplier = 0.1f;
+    public float PanicDecay = 1f;
+    public float PanicMaximum = 100f;
+    private float totalPanic;
+    private float panicMeterFromLocks;
+    private float panicMeterFromVolatility;
 
     //Singleton
     private static StockManager _instance;
@@ -62,6 +71,7 @@ public class StockManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         _instance = this;
 
+        panicMeterFromVolatility = StartingPanic;
         CreateStocks();
         StartCoroutine(Tick());
     }
@@ -74,9 +84,50 @@ public class StockManager : MonoBehaviour
             {
                 UpdateStocks();
                 UpdateGraph();
+                UpdatePanic();
             }
             yield return new WaitForSeconds(1 / OperationsPerSecond);
         }
+    }
+
+    private void UpdatePanic()
+    {
+        float largestVolatility = 0;
+        foreach (Stock stock in Stocks)
+        {
+            if (stock.Volatility > largestVolatility)
+            {
+                largestVolatility = stock.Volatility;
+            }
+        }
+
+        panicMeterFromVolatility = PanicAdditionMultiplier * (largestVolatility - MinVolatility);
+        totalPanic = panicMeterFromVolatility + panicMeterFromLocks;
+
+        if (totalPanic >= PanicMaximum)
+        {
+            GameManager.Instance.gameWon = true;
+            Debug.Log("Game won!");
+        }
+
+        if (panicMeterFromLocks > 0)
+        {
+            panicMeterFromLocks -= PanicDecay;
+        }
+        else
+        {
+            panicMeterFromLocks = 0f;
+        }
+        if (totalPanic < 0) {
+            totalPanic = 0;
+        }
+
+        Debug.Log("Panic: " + totalPanic);
+    }
+
+    public void CreateLockPanic()
+    {
+        panicMeterFromLocks += PanicPerLock;
     }
 
     private void UpdateGraph()
@@ -143,14 +194,14 @@ public class StockManager : MonoBehaviour
     /// </summary>
     private void CreateStocks()
     {
-        Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 0.03f, 20f);
-        Stock restoration = new Stock(StockType.Restaurants, 800, 100, 0.03f, 20f);
-        Stock food = new Stock(StockType.Food, 1000, 100, 0.03f, 20f);
-        Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 0.03f, 20f);
-        Stock technology = new Stock(StockType.Technology, 800, 100, 0.03f, 20f);
-        Stock fuel = new Stock(StockType.Fuel, 1000, 100, 0.03f, 20f);
-        Stock tourism = new Stock(StockType.Tourism, 1200, 100, 0.03f, 20f);
-        Stock entertainment = new Stock(StockType.Entertainment, 800, 100, 0.03f, 20f);
+        Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 0.03f, MinVolatility);
+        Stock restoration = new Stock(StockType.Restaurants, 800, 100, 0.03f, MinVolatility);
+        Stock food = new Stock(StockType.Food, 1000, 100, 0.03f, MinVolatility);
+        Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 0.03f, MinVolatility);
+        Stock technology = new Stock(StockType.Technology, 800, 100, 0.03f, MinVolatility);
+        Stock fuel = new Stock(StockType.Fuel, 1000, 100, 0.03f, MinVolatility);
+        Stock tourism = new Stock(StockType.Tourism, 1200, 100, 0.03f, MinVolatility);
+        Stock entertainment = new Stock(StockType.Entertainment, 800, 100, 0.03f, MinVolatility);
 
         CreateRelation(alcohol, restoration, 0.01f);
         CreateRelation(alcohol, entertainment, 0.01f);
