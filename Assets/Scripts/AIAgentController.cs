@@ -48,9 +48,9 @@ public class AIAgentController : MonoBehaviour
         }
 
         var dir = transform.forward - _target;
-        if (dir.z > 3f) {
+        if (dir.z > 5f) {
             _anim.SetInteger("UpDown", 1);
-        } else if (dir.z < -3f) {
+        } else if (dir.z < -5f) {
             _anim.SetInteger("UpDown", -1);
         } else {
             _anim.SetInteger("UpDown", 0);
