@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
         {
             return _instance;
         }
+        set
+        {
+            _instance = value;
+        }
     }
 
     // Publics
@@ -41,6 +45,13 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        var activeInstance = GameManager.Instance ? GameManager.Instance : this;
+        if (SceneManager.GetActiveScene().name == "main")
+        {
+            activeInstance.StockStations = this.StockStations;
+            activeInstance.SpawnLizards();
+        }
+
         // Setup singleton
         if (_instance != null)
         {
@@ -52,7 +63,6 @@ public class GameManager : MonoBehaviour
         _instance = this;
 
         SetupPortfolio();
-        SpawnLizards();
     }
 
 

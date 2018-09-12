@@ -46,6 +46,10 @@ public class StockManager : MonoBehaviour
         {
             return _instance;
         }
+        set
+        {
+            _instance = value;
+        }
     }
 
     private LineRenderer graph;
@@ -58,9 +62,15 @@ public class StockManager : MonoBehaviour
     void Awake()
     {
         var activeInstance = _instance ? _instance : this;
-        activeInstance.graph = GameObject.Find("Graph").GetComponent<LineRenderer>();
-        activeInstance.graph.enabled = false;
-        activeInstance._graphCamera = activeInstance.graph.transform.parent.GetComponent<Camera>();
+        var anyGraph = GameObject.Find("Graph");
+
+        if (anyGraph)
+        {
+            activeInstance.graph = anyGraph.GetComponent<LineRenderer>();
+            activeInstance.graph.enabled = false;
+            activeInstance._graphCamera = activeInstance.graph.transform.parent.GetComponent<Camera>();
+        }
+
 
         // Setup singleton
         if (_instance != null)
@@ -108,6 +118,11 @@ public class StockManager : MonoBehaviour
         if (TotalPanic >= PanicMaximum)
         {
             GameManager.Instance.gameWon = true;
+            foreach (var lizard in GameManager.Instance.LizardPool.Pool)
+            {
+                lizard.gameObject.SetActive(false);
+            }
+
             SceneManager.LoadScene("credits");
             Debug.Log("Game won!");
         }
@@ -120,7 +135,8 @@ public class StockManager : MonoBehaviour
         {
             panicMeterFromLocks = 0f;
         }
-        if (TotalPanic < 0) {
+        if (TotalPanic < 0)
+        {
             TotalPanic = 0;
         }
     }
