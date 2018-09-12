@@ -33,7 +33,7 @@ public class StockManager : MonoBehaviour
     public float PanicAdditionMultiplier = 0.1f;
     public float PanicDecay = 1f;
     public float PanicMaximum = 100f;
-    private float totalPanic;
+    public float TotalPanic;
     private float panicMeterFromLocks;
     private float panicMeterFromVolatility;
 
@@ -102,9 +102,9 @@ public class StockManager : MonoBehaviour
         }
 
         panicMeterFromVolatility = PanicAdditionMultiplier * (largestVolatility - MinVolatility);
-        totalPanic = panicMeterFromVolatility + panicMeterFromLocks;
+        TotalPanic = panicMeterFromVolatility + panicMeterFromLocks;
 
-        if (totalPanic >= PanicMaximum)
+        if (TotalPanic >= PanicMaximum)
         {
             GameManager.Instance.gameWon = true;
             Debug.Log("Game won!");
@@ -118,11 +118,11 @@ public class StockManager : MonoBehaviour
         {
             panicMeterFromLocks = 0f;
         }
-        if (totalPanic < 0) {
-            totalPanic = 0;
+        if (TotalPanic < 0) {
+            TotalPanic = 0;
         }
 
-        Debug.Log("Panic: " + totalPanic);
+        Debug.Log("Panic: " + TotalPanic);
     }
 
     public void CreateLockPanic()
