@@ -103,7 +103,7 @@ public class GameUIController : MonoBehaviour
             }
 
             var volatility = StockManager.Instance.Stocks[currentIndex].Volatility;
-            var funds = Mathf.FloorToInt(GameManager.Instance.PlayerFunds);
+            var funds = GameManager.Instance.PlayerFunds;
 
             // Volatility
             if (Mathf.Abs(_volatility - volatility) > 0.01f)
@@ -113,7 +113,7 @@ public class GameUIController : MonoBehaviour
             }
 
             // Funds
-            FundsText.text = GetCachedFloatTwoDecimals(GameManager.Instance.PlayerFunds);
+            FundsText.text = GetCachedFloatTwoDecimals(funds);
         }
     }
 
