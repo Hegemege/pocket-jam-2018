@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotatorGraph : MonoBehaviour {
+public class RotatorTitle : MonoBehaviour {
 
     // Use this for initialization
 
@@ -25,7 +25,7 @@ public class RotatorGraph : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(Vector3.right, 45 * Time.deltaTime * speed);
+        transform.Rotate(Vector2.right, 45 * Time.deltaTime * speed);
 
         // Float up/down with a Sin()
         tempPos = posOffset;
