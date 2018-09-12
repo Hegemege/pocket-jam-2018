@@ -310,7 +310,7 @@ MonoBehaviour:
   StartingPanic: 0
   PanicPerLock: 10
   PanicAdditionMultiplier: 0.1
-  PanicDecay: 1
+  PanicDecay: 0.4
   PanicMaximum: 100
   TotalPanic: 0
 --- !u!114 &114274565428311694
