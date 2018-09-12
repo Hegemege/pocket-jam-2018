@@ -434,7 +434,7 @@ MonoBehaviour:
   StockPriceRandomChangeTop: 1.005
   StartingPanic: 0
   PanicPerLock: 10
-  PanicAdditionMultiplier: 0.2
+  PanicAdditionMultiplier: 0.3
   PanicDecay: 0.4
   PanicMaximum: 100
   TotalPanic: 0
