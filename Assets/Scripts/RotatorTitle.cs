@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotatorGraph : MonoBehaviour {
+public class RotatorTitle : MonoBehaviour {
 
     // Use this for initialization
 
