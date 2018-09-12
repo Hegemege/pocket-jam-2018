@@ -11,9 +11,12 @@ public class StockManager : MonoBehaviour
     public int MinVolatility = 20;
     public float VolatilityDecay = 0.98f;
     public float VolatilityIncrease = 1.05f;
-    public float[] VolatilityFluctuationTimeMultipliers;
-    public float[] VolatilityFluctuationScales;
-    public float[] VolatilityFluctuationOffsets;
+    public float[] VolatilityFluctuationTimeMultipliersMin;
+    public float[] VolatilityFluctuationTimeMultipliersMax;
+    public float[] VolatilityFluctuationScalesMin;
+    public float[] VolatilityFluctuationScalesMax;
+    public float[] VolatilityFluctuationOffsetsMin;
+    public float[] VolatilityFluctuationOffsetsMax;
     public float StockSellPriceMultiplier = 0.95f;
     public float StockBuyPriceMultiplier = 1.05f;
     public float StockSellPriceAbsoluteChange = -1f;
@@ -141,7 +144,7 @@ public class StockManager : MonoBehaviour
     private void CreateStocks()
     {
         Stock alcohol = new Stock(StockType.Alcohol, 1200, 100, 0.03f, 20f);
-        Stock restoration = new Stock(StockType.Restoration, 800, 100, 0.03f, 20f);
+        Stock restoration = new Stock(StockType.Restaurants, 800, 100, 0.03f, 20f);
         Stock food = new Stock(StockType.Food, 1000, 100, 0.03f, 20f);
         Stock chemicals = new Stock(StockType.Chemicals, 1200, 100, 0.03f, 20f);
         Stock technology = new Stock(StockType.Technology, 800, 100, 0.03f, 20f);
@@ -199,7 +202,7 @@ public class StockManager : MonoBehaviour
         this.Stocks.Add(entertainment);
 
         this.stockHistory.Add(StockType.Alcohol, new float[100]);
-        this.stockHistory.Add(StockType.Restoration, new float[100]);
+        this.stockHistory.Add(StockType.Restaurants, new float[100]);
         this.stockHistory.Add(StockType.Food, new float[100]);
         this.stockHistory.Add(StockType.Chemicals, new float[100]);
         this.stockHistory.Add(StockType.Technology, new float[100]);
@@ -258,5 +261,5 @@ public class StockManager : MonoBehaviour
 
 public enum StockType
 {
-    None, Alcohol, Restoration, Food, Chemicals, Technology, Fuel, Tourism, Entertainment
+    None, Alcohol, Restaurants, Food, Chemicals, Technology, Fuel, Tourism, Entertainment
 }
