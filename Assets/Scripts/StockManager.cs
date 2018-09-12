@@ -32,6 +32,7 @@ public class StockManager : MonoBehaviour
     }
 
     private LineRenderer graph;
+    private Camera _graphCamera;
 
     public List<Stock> Stocks = new List<Stock>();
 
@@ -41,6 +42,8 @@ public class StockManager : MonoBehaviour
     {
         var activeInstance = _instance ? _instance : this;
         activeInstance.graph = GameObject.Find("Graph").GetComponent<LineRenderer>();
+        activeInstance.graph.enabled = false;
+        activeInstance._graphCamera = activeInstance.graph.transform.parent.GetComponent<Camera>();
 
         // Setup singleton
         if (_instance != null)
@@ -73,6 +76,7 @@ public class StockManager : MonoBehaviour
     {
         if (GameManager.Instance.PlayerSelectedStation != -1)
         {
+            graph.enabled = true;
             float[] array = stockHistory[StockManager.Instance.GetType(GameManager.Instance.PlayerSelectedStation)];
             Vector3[] positions = new Vector3[array.Length];
 
@@ -84,10 +88,13 @@ public class StockManager : MonoBehaviour
                     largest = f;
                 }
             }
+
+            // Get camera width so we can fill the screen
+            var viewWidth = 2f * _graphCamera.orthographicSize * _graphCamera.aspect;
             for (int i = 0; i < array.Length; i++)
             {
                 Vector3 pos = new Vector3();
-                pos.x = ((float)i).Remap(0f, 99f, -2.8f, 2.8f);
+                pos.x = ((float)i).Remap(0f, 99f, -viewWidth / 2f + 0.1f, viewWidth / 2f - 0.1f);
                 pos.y = array[i].Remap(0f, largest * 2, 3.2f, 5.7f);
                 positions[i] = pos;
             }
