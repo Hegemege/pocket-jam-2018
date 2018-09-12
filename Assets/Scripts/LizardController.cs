@@ -59,6 +59,7 @@ public class LizardController : AIAgentController
         _atTarget = false;
         var stocks = new List<Stock>();
         stocks.AddRange(StockManager.Instance.Stocks);
+        stocks.Shuffle();
         stocks.Sort((a, b) => a.Volatility.CompareTo(b.Volatility));
         stocks.Reverse();
 
