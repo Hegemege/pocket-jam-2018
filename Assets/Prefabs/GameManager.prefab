@@ -307,6 +307,12 @@ MonoBehaviour:
   VolatilityRandomChangeTop: 1.6
   StockPriceRandomChangeBottom: 0.995
   StockPriceRandomChangeTop: 1.005
+  StartingPanic: 0
+  PanicPerLock: 10
+  PanicAdditionMultiplier: 0.1
+  PanicDecay: 1
+  PanicMaximum: 100
+  TotalPanic: 0
 --- !u!114 &114274565428311694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerFunds: 500
   isPlaying: 1
+  gameWon: 0
   CloseToTarget: 0
   LizardSpawnCount: 25
   LizardPool: {fileID: 114551544816978470}
