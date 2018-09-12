@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Debug.LogWarning("Could not find stock station " + name);
+        //Debug.LogWarning("Could not find stock station " + name);
         return Vector3.zero;
     }
 

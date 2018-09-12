@@ -45,12 +45,14 @@ public class Stock
         SetupVolatilityValues();
     }
 
-    private void SetupVolatilityValues() {
+    private void SetupVolatilityValues()
+    {
         int length = StockManager.Instance.VolatilityFluctuationOffsetsMax.Length;
         VolatilityFluctuationTimeMultipliers = new float[length];
         VolatilityFluctuationScales = new float[length];
         VolatilityFluctuationOffsets = new float[length];
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++)
+        {
             VolatilityFluctuationTimeMultipliers[i] = Random.Range(StockManager.Instance.VolatilityFluctuationTimeMultipliersMin[i], StockManager.Instance.VolatilityFluctuationTimeMultipliersMax[i]);
             VolatilityFluctuationScales[i] = Random.Range(StockManager.Instance.VolatilityFluctuationScalesMin[i], StockManager.Instance.VolatilityFluctuationScalesMax[i]);
             VolatilityFluctuationOffsets[i] = Random.Range(StockManager.Instance.VolatilityFluctuationOffsetsMin[i], StockManager.Instance.VolatilityFluctuationOffsetsMax[i]);
@@ -186,7 +188,7 @@ public class Stock
 
             if (Volatility > StockManager.Instance.VolatilityThreshold)
             {
-                Debug.Log("Stock " + Name + " closed");
+                //Debug.LogDebug.Log("Stock " + Name + " closed");
                 this.Closed = true;
                 this.ClosedTimer = this.Timer;
                 StockManager.Instance.CreateLockPanic();
@@ -196,7 +198,7 @@ public class Stock
         {
             if (this.Timer >= this.ClosedTimer + StockManager.Instance.VolatilityLockTime)
             {
-                Debug.Log("Stock " + Name + " reopened");
+                //Debug.Log("Stock " + Name + " reopened");
                 this.Volatility = this.startingVolatility;
                 this.MarketCap = this.startingMarketCap;
                 this.Closed = false;

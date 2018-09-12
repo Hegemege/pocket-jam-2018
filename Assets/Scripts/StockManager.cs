@@ -124,7 +124,7 @@ public class StockManager : MonoBehaviour
             }
 
             SceneManager.LoadScene("credits");
-            Debug.Log("Game won!");
+            //Debug.Log("Game won!");
         }
 
         if (panicMeterFromLocks > 0)
