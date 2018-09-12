@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         List<Stock> stocks = StockManager.Instance.Stocks;
         for (int i = 0; i < stocks.Count; i++)
         {
-            if (stocks[i].Name == name && PlayerFunds >= stocks[i].Price)
+            if (stocks[i].Name == name)
             {
                 if (!stocks[i].Closed)
                 {
