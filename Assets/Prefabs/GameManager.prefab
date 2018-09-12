@@ -372,10 +372,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerFunds: 500
+  PlayerStartingStocks: 5
   isPlaying: 1
   gameWon: 0
   CloseToTarget: 0
-  LizardSpawnCount: 25
+  LizardSpawnCount: 50
   LizardPool: {fileID: 114551544816978470}
   LizardSpawnBounds: {fileID: 65368758312988748}
   BuySFXPool: {fileID: 114274565428311694}

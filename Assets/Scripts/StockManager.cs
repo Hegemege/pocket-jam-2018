@@ -121,8 +121,6 @@ public class StockManager : MonoBehaviour
         if (TotalPanic < 0) {
             TotalPanic = 0;
         }
-
-        Debug.Log("Panic: " + TotalPanic);
     }
 
     public void CreateLockPanic()

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     // Publics
     public float PlayerFunds = 10000f;
+    public int PlayerStartingStocks = 5;
     public bool isPlaying = true;
     public bool gameWon = false;
     public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
@@ -60,14 +61,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SetupPortfolio()
     {
-        PlayerPortfolio.Add(StockType.Alcohol, 0);
-        PlayerPortfolio.Add(StockType.Restaurants, 0);
-        PlayerPortfolio.Add(StockType.Food, 0);
-        PlayerPortfolio.Add(StockType.Chemicals, 0);
-        PlayerPortfolio.Add(StockType.Technology, 0);
-        PlayerPortfolio.Add(StockType.Fuel, 0);
-        PlayerPortfolio.Add(StockType.Tourism, 0);
-        PlayerPortfolio.Add(StockType.Entertainment, 0);
+        PlayerPortfolio.Add(StockType.Alcohol, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Restaurants, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Food, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Chemicals, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Technology, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Fuel, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Tourism, PlayerStartingStocks);
+        PlayerPortfolio.Add(StockType.Entertainment, PlayerStartingStocks);
     }
 
     private void SpawnLizards()
