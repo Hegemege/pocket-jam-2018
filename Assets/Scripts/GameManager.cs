@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     // Publics
     public float PlayerFunds = 10000f;
     public bool isPlaying = true;
+    public bool gameWon = false;
     public Dictionary<StockType, int> PlayerPortfolio = new Dictionary<StockType, int>();
     public bool CloseToTarget;
 

@@ -189,6 +189,7 @@ public class Stock
                 Debug.Log("Stock " + Name + " closed");
                 this.Closed = true;
                 this.ClosedTimer = this.Timer;
+                StockManager.Instance.CreateLockPanic();
             }
         }
         else
