@@ -119,11 +119,15 @@ public class GameUIController : MonoBehaviour
 
     public void PreviousStation()
     {
+        var sfx = GameManager.Instance.SellSFXPool.GetPooledObject();
+        sfx.SetActive(true);
         GameManager.Instance.SetPlayerTarget(-1);
     }
 
     public void NextStation()
     {
+        var sfx = GameManager.Instance.SellSFXPool.GetPooledObject();
+        sfx.SetActive(true);
         GameManager.Instance.SetPlayerTarget(1);
     }
 
